@@ -1,0 +1,30 @@
+.container{
+background-image: url('../../../images/barber.jpg');
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.login{
+    background-color: black;
+    border: solid 3px greenyellow ;
+    width: 400px;
+    box-sizing: border-box;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px black;
+    color: white;
+}
+.btn_div{
+    display: flex;
+    justify-content: center;
+}
+
+.message{
+    text-align: center;
+    color: white;
+}

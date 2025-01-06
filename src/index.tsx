@@ -2,24 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import "./index.css"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from './pages/main/Main';
-import NoPage from './pages/NoPage/NoPage';
-import Login from './pages/auth/login';
+import { Provider } from 'react-redux';
+import { store } from './Redux/Store';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <BrowserRouter>
   <React.StrictMode>
-    <Routes>
-    <Route path="/" element={<Main />}>
-    </Route>
-    <Route path="/Login" element={<Login/>}/>
-    <Route path="*" element={<NoPage />}/>
-    </Routes>
+   <Provider store={store}>
+    <App/>
+   </Provider>
   </React.StrictMode>
-  </BrowserRouter>
+
 
 );
 

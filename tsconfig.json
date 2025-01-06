@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/pages/auth/interfaces", "src/pages/auth/interfaces/login", "src/Re, Store","dux/Store", "src/Redux/Store", "src/Redux/Store.ts"  ]
 }

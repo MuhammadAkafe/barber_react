@@ -1,0 +1,41 @@
+.form {
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 2px greenyellow;
+    border-radius: 10px;
+    width: 400px;
+    color: white;
+    background-color: black;
+
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../../images/barber.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.check_contaner {
+    position: relative;
+    left: 20px;
+}
+
+.submit {
+    text-align: center;
+}
+.error{
+    color: red;
+    display: flex;
+    justify-content: center;
+}
+
+.successMessage{
+    text-align: center;
+    color: white;
+}
