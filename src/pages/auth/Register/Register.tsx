@@ -21,7 +21,7 @@ function Register() {
     });
 
     const dispatch = useAppDispatch();
-    const { data, loading, error, successMessage } = useAppSelector((state) => state.Register);
+    const {loading, error } = useAppSelector((state) => state.Register);
     const navigate = useAppNavigate();
 
 
@@ -130,14 +130,7 @@ function Register() {
                         required
                     />
                 </div>
-                <Loading loading={loading} />
-                <div className={styles.message}>
-                    {error ? (
-                        <div className={styles.error}>{error}</div>
-                    ) : successMessage? (
-                        <div className={styles.successMessage}>{data?.message}</div>
-                    ) : null}
-                </div>
+                <Loading loading={loading} error={error}  />
             </form>
         </div>
     );

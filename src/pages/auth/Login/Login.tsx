@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     });
     const dispatch = useDispatch<AppDispatch>();
 
-    const { data, loading, error, successMessage } = useAppSelector((state) => state.login);
+    const { loading, error } = useAppSelector((state) => state.login);
     const navigate = useAppNavigate();
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
             const action = await dispatch(fetchLoginData(loginData)); // Dispatch the login action
             if (fetchLoginData.fulfilled.match(action)) 
                 {
-             navigate('/home')
+             navigate('/Home')
             }
         } 
         catch (err) {
@@ -50,7 +50,7 @@ const Login: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <form className={styles.login} onSubmit={handleLogin}>
+            <form className={styles.loginfrom} onSubmit={handleLogin}>
                 <div>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address</label>
@@ -79,22 +79,11 @@ const Login: React.FC = () => {
                             required
                         />
                     </div>
-                    <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-                    </div>
-                    <Loading loading={loading} />
-                <div className={styles.message}>
-                    {error ? (
-                        <div className={styles.error}>{error}</div>
-                    ) : successMessage? (
-                        <div className={styles.successMessage}>{data?.message}</div>
-                    ) : null}
-                </div>
-
+                    <Loading loading={loading} error={error} />
                     <Link to="/Register">SignUp</Link>
-                </div>
+                </div>     
             </form>
+          
         </div>
     );
 };

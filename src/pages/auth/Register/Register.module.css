@@ -21,21 +21,3 @@
 
 }
 
-.check_contaner {
-    position: relative;
-    left: 20px;
-}
-
-.submit {
-    text-align: center;
-}
-.error{
-    color: red;
-    display: flex;
-    justify-content: center;
-}
-
-.successMessage{
-    text-align: center;
-    color: white;
-}

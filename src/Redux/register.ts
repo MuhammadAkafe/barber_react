@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import DataState from '../interfaces/datastate';
-
+import { apiInstance } from '../interfaces/axiosInstance';
 interface RegisterPayload {
   username: string;
   email: string;
@@ -15,6 +15,7 @@ interface RegisterPayload {
 // Initial state
 const initialState: DataState = {
   data:null,
+  message:null,
   loading: false,
   successMessage:false,
   error: null,
@@ -25,7 +26,7 @@ export const fetchRegisterData = createAsyncThunk(
   'Register/fetchData',
   async (registerPayload: RegisterPayload, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_URL}/Register`, registerPayload);
+      const response = await apiInstance.post(`/Register`, registerPayload);
       return response.data;
     } 
     catch (error: any) {
@@ -56,18 +57,21 @@ const RegisterSlice = createSlice({
       .addCase(fetchRegisterData.pending, (state) => {
         state.loading= true;
         state.data =null;
+        state.message=null
         state.successMessage=false;
         state.error = null;
       })
       .addCase(fetchRegisterData.fulfilled, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.data = action.payload;
+        state.message=action.payload.message
         state.successMessage=true
         state.error = null;
       })
       .addCase(fetchRegisterData.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.successMessage=false;
+        state.message=null
         state.data = null;
         state.error = action.payload?.message || 'An error occurred';
       });
