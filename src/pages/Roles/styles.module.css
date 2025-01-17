@@ -1,0 +1,24 @@
+.container{
+height: 100vh;
+display: flex;
+justify-content: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Align items to the left */
+    gap: 1rem; /* Add space between elements */
+  }
+  
+  .Addrole {
+    font-size: 1.5rem; /* Adjust the font size if needed */
+    font-weight: bold; /* Optional: Make the title bold */
+  }
+  
+  .datefield {
+    width: 100%; /* Ensure the DateTimePicker takes the full width */
+  }
+  .cites{
+    width: 100%;
+  }

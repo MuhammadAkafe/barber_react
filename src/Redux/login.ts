@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import DataState from '../interfaces/datastate';
-import { apiInstance } from '../interfaces/axiosInstance';
+import apiInstance from '../interfaces/axiosInstance';
 
 interface LoginPayload {
     email: string;
@@ -19,12 +19,12 @@ const initialState: DataState = {
     error: null,
 };
 
+
 // Thunk action for fetching data
 export const fetchLoginData  = createAsyncThunk('login/fetchData', async (login:LoginPayload, { rejectWithValue }) => 
   {
     try {
         const action = await apiInstance.post(`/Login`,login);
-        localStorage.setItem("accessToken",action.data.access_token)
         return action.data;
     } 
 

@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 
 export const apiInstance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_URL}`,
+  timeout: 3000,
   withCredentials: true,
 });
 
@@ -9,17 +10,16 @@ export const apiInstance: AxiosInstance = axios.create({
 let accessToken: string | null = null;
 
 // Request Interceptor: Attach token to all requests if it exists
-// apiInstance.interceptors.request.use(
-//   (config) => {
-//     accessToken=localStorage.getItem("accessToken")
-//     if (accessToken)
-//        {
-//       config.headers.Authorization = `Bearer ${accessToken}`;
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
+apiInstance.interceptors.request.use(
+  (config) => {
+    if (accessToken)
+       {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Response Interceptor: Handle 401 errors and refresh token
 // apiInstance.interceptors.response.use(

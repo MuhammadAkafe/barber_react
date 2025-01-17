@@ -1,3 +1,14 @@
 .Navbar{
-    background-color:#49687A;
+background-color: black;
+height: 50px;
+}
+.ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    list-style-type: none;
+}
+#logout{
+    color: red;
 }

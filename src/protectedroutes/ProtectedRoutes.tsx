@@ -51,7 +51,6 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
 
   // Check authentication and handle token refresh
   const checkAuth = async () => {
-    console.log(accessToken);
     if (!accessToken) {
       setIsAuthenticated(false);
       setLoading(false);

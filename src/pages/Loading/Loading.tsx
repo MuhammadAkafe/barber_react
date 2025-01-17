@@ -7,6 +7,7 @@ interface LoadingProps {
   error: string | null;
 }
 
+
 function Loading({ loading, error }: LoadingProps) {
   return (
     <>

@@ -32,6 +32,9 @@ const Login: React.FC = () => {
                 {
              navigate('/Home')
             }
+            else{
+             navigate('/')
+            }
         } 
         catch (err) {
             console.error("Login failed", err);
