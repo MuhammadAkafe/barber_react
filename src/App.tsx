@@ -7,7 +7,7 @@ import Register from './pages/auth/Register/Register';
 import Home from './pages/Home/Home';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoutes from './protectedroutes/ProtectedRoutes'; // Fixed import path
-import Roles from './pages/Roles/Roles';
+import Roles from './pages/Roles/AddRoles';
 import Navbar from './pages/NavBar/Navbar';
 import { useLocation } from 'react-router-dom';
 

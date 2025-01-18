@@ -1,6 +1,7 @@
-.Navbar{
-background-color: black;
-height: 50px;
+.Navbar {
+    background-color: black;
+    height: 50px;
+    border-bottom: solid 1px greenyellow;
 }
 .ul{
     display: flex;

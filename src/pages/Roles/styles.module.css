@@ -2,13 +2,23 @@
 height: 100vh;
 display: flex;
 justify-content: center;
+background-color: black;
+align-items: center;
+}
+.text{
+  color: white;
 }
 
 .form {
     display: flex;
+    height:fit-content;
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Align items to the left */
-    gap: 1rem; /* Add space between elements */
+    gap: 5px; /* Add space between elements */
+    padding: 25px;
+    border: 3px solid greenyellow;
+    border-radius: 15px;
+    background-color: 1px solid #ccc ;
   }
   
   .Addrole {
@@ -17,7 +27,7 @@ justify-content: center;
   }
   
   .datefield {
-    width: 100%; /* Ensure the DateTimePicker takes the full width */
+    width: 100%; 
   }
   .cites{
     width: 100%;
