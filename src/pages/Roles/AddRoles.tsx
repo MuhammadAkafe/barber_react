@@ -1,83 +1,72 @@
 import Style from './styles.module.css';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
-import { cites } from '../cites/israelcites';
+import { useState, useCallback } from 'react';
 import { useAppSelector } from '../../hooks/hooks';
+import axios from 'axios';
+import  Citys  from '../components/cites/Citys';
+import RoleData from '../../interfaces/formdata';
+import Barber from '../components/barber/barber';
+import HearCut from '../components/HearCut/HearCut';
 
-interface roledata {
-  id: string;
-  date?: string;
-  userID: string;
-  phonenumber: string;
-  city?: string;
-  barber?: string;
-}
 
 function Roles() {
-  let i=0;
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
-  const [Role_from_data, setValue] = useState<Partial<roledata>>({
-    city: 'טירה', // Default city
-    barber: 'חאזם', // Default barber
-    date: selectedDate?.format('D/M/YYYY HH:mm'), // Default date
-  });
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const { data } = useAppSelector((state) => state.login);
+  const [formData, setFormData] = useState<RoleData>({
+    userID: data?.userID ?? '',
+    date: selectedDate,
+    phoneNumber: data?.phoneNumber ?? '',
+    userName: data?.userName ?? '',
+    city: 'טירה',
+    barber: 'חאזם',
+    roleFor: 'תספורת',
+  });
 
-  const handleAccept = (newValue: Dayjs | null) => {
-    if (newValue) {
-      setValue({ ...Role_from_data, date: newValue.format('D/M/YYYY HH:mm') });
-      setSelectedDate(newValue);
+  const handleAccept = useCallback((datetime: Dayjs | null) => {
+    if (datetime) {
+      setFormData((prev) => ({ ...prev, date: datetime?.format('YYYY-MM-DD HH:mm') }));
+      setSelectedDate(datetime);
     }
-  };
+  }, []);
 
-  const handleselectionchange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue({ ...Role_from_data, [e.target.name]: e.target.value });
-  };
+  const handleSelectionChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
-  const handlesubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(Role_from_data);
-  };
+    if(!formData.date){
+      alert('Please select date');
+      return;
+    }
+    axios.post('http://localhost:5000/AddRole', formData)
+      .then(response => console.log(response.data))
+      .catch(error => console.error(error));
+      console.log(formData);
+  }, [formData]);
+
+
 
   return (
     <div className={Style.container}>
-      <form className={Style.form} onSubmit={handlesubmit}>
+      <form className={Style.form} onSubmit={handleSubmit}>
         <div className={`${Style.text}`}>הוספת תור</div>
 
-        {/* City Selection */}
         <div className={`${Style.text}`}>עיר</div>
-        <select
-          className={`${Style.cites}`}
-          name="city"
-          value={Role_from_data.city}
-          onChange={handleselectionchange}
-        >
-          {cites.map((city) => (
-            <option key={i++}  value={city.name}>
-              {city.name}
-            </option>
-          ))}
-        </select>
+        <Citys formdata={formData} handleSelectionChange={handleSelectionChange}  />
 
-        {/* Barber Selection */}
         <div className={`${Style.text}`}>סַפָּר</div>
-        <select
-          className={`${Style.cites}`}
-          name="barber"
-          value={Role_from_data.barber}
-          onChange={handleselectionchange}
-        >
-          <option value="חאזם">חאזם</option>
-          <option value="מוחמד">מוחמד</option>
-          <option value="אחמד">אחמד</option>
-        </select>
+        <Barber formdata={formData} handleSelectionChange={handleSelectionChange} />
 
-        {/* Date Selection */}
+
+        <div className={`${Style.text}`}>תפקיד</div>
+        <HearCut formdata={formData} handleSelectionChange={handleSelectionChange} />
+
         <div className={`${Style.text}`}>תאריך</div>
         <DateTimePicker
-          value={selectedDate}
-          onChange={(newValue) => setSelectedDate(newValue)}
+          onChange={(newValue) => newValue && setSelectedDate(newValue)}
           onAccept={handleAccept}
           minutesStep={15}
           ampm={false}
