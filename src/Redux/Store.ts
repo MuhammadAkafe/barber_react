@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import loginSlice from "./login"
-import RegisterSlice from "../Redux/register"
+import loginSlice from "./Auth/login"
+import RegisterSlice from "./Auth/register"
+import  appointmentSlice  from "./User/AddAppointment"; 
 export const store = configureStore({
   reducer: {
-     login:loginSlice, 
-     Register:RegisterSlice
+     loginSlice, 
+     RegisterSlice,
+     appointmentSlice,
   },
-  devTools: process.env.NODE_ENV !== 'production',
+  //devTools: process.env.NODE_ENV !== 'production',
 })
 
 export type AppStore = typeof store

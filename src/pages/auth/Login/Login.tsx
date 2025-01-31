@@ -3,11 +3,12 @@ import styles from './Login.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../../Redux/Store'; // Adjust import path based on your project structure
-import { fetchLoginData,resetState  } from '../../../Redux/login'; // Assume `authSlice` contains a `loginUser` thunk
+import { fetchLoginData,resetState  } from '../../../Redux/Auth/login'; // Assume `authSlice` contains a `loginUser` thunk
 import { useAppNavigate } from '../../../hooks/hooks';
 import { useAppSelector } from '../../../hooks/hooks';
 import { useEffect } from 'react';
-import Loading from '../../Loading/Loading';
+import Loading from '../../components/Loading/Loading';
+import { ErrorHandling } from '../../components/Errorhandling/Error';
 const Login: React.FC = () => {
     const [loginData, setLoginData] = useState({
         email: "",
@@ -15,11 +16,10 @@ const Login: React.FC = () => {
     });
     const dispatch = useDispatch<AppDispatch>();
 
-    const { loading, error } = useAppSelector((state) => state.login);
+    const { loading, error } = useAppSelector((state) => state.loginSlice);
     const navigate = useAppNavigate();
 
     useEffect(() => {
-        // Reset state when the component mounts
         dispatch(resetState());
     }, [dispatch]);
 
@@ -28,13 +28,11 @@ const Login: React.FC = () => {
         e.preventDefault();
         try {
             const action = await dispatch(fetchLoginData(loginData)); // Dispatch the login action
-            if (fetchLoginData.fulfilled.match(action)) 
-                {
-             navigate('/Home')
-            }
-            else{
-             navigate('/')
-            }
+            // const isError=ErrorHandling(action,fetchLoginData)
+            // if(isError){  
+            //     return;
+            // }
+            navigate(`/MyAppointments`)
         } 
         catch (err) {
             console.error("Login failed", err);

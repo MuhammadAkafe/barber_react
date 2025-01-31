@@ -1,20 +1,18 @@
 // features/dataSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import DataState from '../interfaces/datastate';
-import apiInstance from '../interfaces/axiosInstance';
+import DataState from '../../interfaces/datastate';
+import apiInstance from '../../interfaces/axiosInstance';
 
 interface LoginPayload {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 // Initial state
 const initialState: DataState = {
     data:null,
-    message:null,
-    accessToken:undefined,
-    successMessage:false,
+    access_token:null,
     loading: false,
     error: null,
 };
@@ -48,7 +46,6 @@ const loginSlice = createSlice({
     reducers: {
       resetState: (state) => {
           state.data = null;
-          state.successMessage=false;
           state.error = null;
           state.loading = false;
         },
@@ -58,24 +55,16 @@ const loginSlice = createSlice({
         .addCase(fetchLoginData.pending, (state) => {
           state.loading= true;
           state.data =null;
-          state.message=null
-          state.accessToken=undefined;
-          state.successMessage=false;
           state.error = null;
         })
         .addCase(fetchLoginData.fulfilled, (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.data = action.payload;
-          state.accessToken=action.payload.access_token
-          state.message=action.payload.message
-          state.successMessage=true
+          state.access_token = action.payload.access_token;
           state.error = null;
         })
         .addCase(fetchLoginData.rejected, (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.successMessage=false;
-          state.message=null
-          state.accessToken=undefined;
           state.data = null;
           state.error = action.payload?.message || 'An error occurred';
         });

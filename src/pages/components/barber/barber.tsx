@@ -1,6 +1,6 @@
 import React from 'react'
 import Style from './barber.module.css'
-import { Props } from '../../../interfaces/formdata';
+import { Props } from '../../../interfaces/AppointmentData';
 function Barber({ formdata, handleSelectionChange }: Props): JSX.Element {
   return (
     <select
@@ -10,8 +10,6 @@ function Barber({ formdata, handleSelectionChange }: Props): JSX.Element {
     onChange={handleSelectionChange}
   >
     <option value="חאזם">חאזם</option>
-    <option value="מוחמד">מוחמד</option>
-    <option value="אחמד">אחמד</option>
   </select>
   )
 }

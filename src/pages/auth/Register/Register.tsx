@@ -2,13 +2,14 @@ import React, { useState, FormEvent, ChangeEvent } from 'react';
 import styles from './Register.module.css';
 import PhoneInput, { Value as PhoneValue } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { fetchRegisterData } from '../../../Redux/register';
+import { fetchRegisterData } from '../../../Redux/Auth/register';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import Loading from '../../Loading/Loading';
+import Loading from '../../components/Loading/Loading';
 import { useAppNavigate } from '../../../hooks/hooks';
 import register from '../../../interfaces/Register';
 import { useEffect } from 'react';
-import { resetState } from '../../../Redux/register';
+import { resetState } from '../../../Redux/Auth/register';
+import { ErrorHandling } from '../../components/Errorhandling/Error';
 
 function Register() {
     const [register, setRegister] = useState<register>({
@@ -21,7 +22,7 @@ function Register() {
     });
 
     const dispatch = useAppDispatch();
-    const {loading, error } = useAppSelector((state) => state.Register);
+    const {loading, error } = useAppSelector((state) => state.RegisterSlice);
     const navigate = useAppNavigate();
 
 
@@ -34,10 +35,12 @@ function Register() {
         e.preventDefault();
         try {
             const action = await dispatch(fetchRegisterData(register))
-            if (fetchRegisterData.fulfilled.match(action)) 
+            const isError=ErrorHandling(action,fetchRegisterData)
+            if(isError)
                 {
-                navigate('/'); // Redirect to home page
+                return;
             }
+            navigate(`/Profile`)
         } 
         catch (error) 
         {

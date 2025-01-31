@@ -6,16 +6,16 @@ const Navbar:React.FC=()=>{
     <nav className={`navbar navbar-expand-lg  ${styles.Navbar}`} dir="rtl"  >
         <ul className={styles.ul}>
         <li className="nav-item">
-            <Link className="nav-link" aria-disabled="true" to="/Home" >בית</Link>
+            <Link className={`nav-link ${styles.navlink}`} aria-disabled="true" to="/Profile" >פרופיל</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/Profile">פרופיל </Link>
+            <Link className={`nav-link ${styles.navlink}`} aria-current="page" to="/MyAppointments">הפגישות שלי</Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link"  aria-disabled="true" to="/Roles">הפגישות שלי </Link>
+          <Link className={`nav-link ${styles.navlink}`}  aria-disabled="true" to="/AddAppointment">הוספה פגישה</Link>
           </li>
           <li className={`nav-item`}>
-            <Link className="nav-link" id={`${styles.logout}`}aria-disabled="true" to="/" >יציאה</Link>
+            <Link className={`nav-link ${styles.navlink}`} id={`${styles.logout}`} aria-disabled="true" to="/" >יציאה</Link>
           </li>
         </ul>
   </nav>

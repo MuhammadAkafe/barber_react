@@ -1,8 +1,10 @@
 // features/dataSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import DataState from '../interfaces/datastate';
-import { apiInstance } from '../interfaces/axiosInstance';
+import DataState from '../../interfaces/datastate';
+import { apiInstance } from '../../interfaces/axiosInstance';
+
+
 interface RegisterPayload {
   username: string;
   email: string;
@@ -13,11 +15,10 @@ interface RegisterPayload {
 }
 
 // Initial state
-const initialState: DataState = {
+const initialState: DataState = 
+{
   data:null,
-  message:null,
   loading: false,
-  successMessage:false,
   error: null,
 };
 
@@ -47,7 +48,6 @@ const RegisterSlice = createSlice({
   reducers: {
     resetState: (state) => {
         state.data = null;
-        state.successMessage=false;
         state.error = null;
         state.loading = false;
       },
@@ -57,21 +57,15 @@ const RegisterSlice = createSlice({
       .addCase(fetchRegisterData.pending, (state) => {
         state.loading= true;
         state.data =null;
-        state.message=null
-        state.successMessage=false;
         state.error = null;
       })
       .addCase(fetchRegisterData.fulfilled, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.data = action.payload;
-        state.message=action.payload.message
-        state.successMessage=true
         state.error = null;
       })
       .addCase(fetchRegisterData.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
-        state.successMessage=false;
-        state.message=null
         state.data = null;
         state.error = action.payload?.message || 'An error occurred';
       });

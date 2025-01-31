@@ -1,8 +1,6 @@
 import React from 'react'
-import { cites } from '../../cites/israelcites'
 import Style from './Cites.module.css'
-import RoleData from '../../../interfaces/formdata';
-import { Props } from '../../../interfaces/formdata';
+import { Props } from '../../../interfaces/AppointmentData';
 
 
  function Citys({ formdata, handleSelectionChange }: Props): JSX.Element {
@@ -13,11 +11,9 @@ import { Props } from '../../../interfaces/formdata';
       value={formdata.city}
       onChange={handleSelectionChange}
     >
-      {cites.map((city, index) => (
-        <option key={index} value={city.name}>
-          {city.name}
-        </option>
-      ))}
+        <option  value={"טירה"}>
+         טירה
+        </option>   
     </select>
   )
 }

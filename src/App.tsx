@@ -1,18 +1,18 @@
 import React from 'react';
 import './App.css';
 import Login from './pages/auth/Login/Login';
-import NoPage from './pages/NoPage/NoPage';
+import NoPage from './pages/components/NoPage/NoPage';
 import Profile from './pages/Profile/Profile';
 import Register from './pages/auth/Register/Register';
-import Home from './pages/Home/Home';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoutes from './protectedroutes/ProtectedRoutes'; // Fixed import path
-import Roles from './pages/Roles/AddRoles';
-import Navbar from './pages/NavBar/Navbar';
+import AddAppoinment from './pages/Appointments/Add_Appointments/AddAppoinment';
+import Navbar from './pages/components/NavBar/Navbar';
 import { useLocation } from 'react-router-dom';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import MyAppointments from './pages/Appointments/myAppointments/MyAppointments';
 
 
 function App() {
@@ -26,27 +26,27 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/Register" element={<Register />} />
-          <Route path="/Profile" 
+          <Route path="/MyAppointments" 
           element={  
              <ProtectedRoutes>        
-              <Profile />   
+             <MyAppointments/>
               </ProtectedRoutes>
             }
           />
           <Route
-            path="/Home"
+            path="/Profile"
             element={
               <ProtectedRoutes>
-                <Home />
+                <Profile />  
               </ProtectedRoutes>
             }
           />
 
           <Route
-            path="/Roles"
+            path="/AddAppointment"
             element={
               // <ProtectedRoutes>
-                <Roles />
+                <AddAppoinment />
               /* </ProtectedRoutes> */
             }
           />
