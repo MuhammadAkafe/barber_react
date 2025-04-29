@@ -1,11 +1,12 @@
 import React from 'react'
 import { Props } from '../../../interfaces/AppointmentData'
-import Style from './HearCut.module.css'
+import  Style  from './Role_for.module.css'
 
-function HearCut({ formdata, handleSelectionChange }: Props): JSX.Element {
+
+function Role_For({ formdata, handleSelectionChange }: Props): JSX.Element {
   return (
     <select
-    name="roleFor"
+    name="role_for"
     value={formdata.role_for}
     onChange={handleSelectionChange}
     className={Style.rolefor}
@@ -16,4 +17,4 @@ function HearCut({ formdata, handleSelectionChange }: Props): JSX.Element {
   )
 }
 
-export default HearCut
+export default Role_For

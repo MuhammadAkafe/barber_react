@@ -33,7 +33,7 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
     try {
       const response = await apiInstance.post('/RefreshToken');
       const newAccessToken = response.data.accessToken;
-
+      
       if (newAccessToken) {
         setIsAuthenticated(true);
         // Optionally store the new access token (e.g., in Redux or memory)
@@ -66,7 +66,8 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
       if (!refreshed) {
         setIsAuthenticated(false);
       }
-    } else {
+    }
+     else {
       setIsAuthenticated(true);
     }
     setLoading(false); // End loading

@@ -1,19 +1,56 @@
 .Navbar {
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     height: 50px;
-}
-.ul{
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    width: 100%;
-    list-style-type: none;
-}
-#logout{
-    color: red;
-}
-.navlink{
-    color: white;
+    justify-content: space-between;
 }
 
+.menu_icon
+{
+color: white;
+font-size: 35px;
+}
+.span{
+    margin-left: 10px;
+}
+.ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.li{
+    width: 100%;
+    font-size: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.logout{
+    color: red;
+    margin-left: 10px;
+}
+
+.userAvatar{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 20px;
+  margin-right: 10px;
+}
+.imgbackground{
+    background-image: url('../../../images/barber.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.name{
+    color: aliceblue;
+}
 

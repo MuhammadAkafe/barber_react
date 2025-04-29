@@ -11,11 +11,13 @@ interface Data {
 
 export function ErrorHandling(action: Action, data: Data): boolean {
     if (data.rejected.match(action)) {
-        alert(action.payload.message);
+        console.log(action.payload.message);
         return true;
     } 
     else {
-        alert(action.payload.message);
+        console.log(action.payload.message);
         return false;
     }
+   
+
 }

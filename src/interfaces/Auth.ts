@@ -6,3 +6,9 @@ export default interface register {
     confirm_password: string;
     isAdmin: boolean;
 }
+
+
+export interface LoginPayload {
+    email: string;
+    password: string;
+  }

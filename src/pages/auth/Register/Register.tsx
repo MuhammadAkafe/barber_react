@@ -6,7 +6,7 @@ import { fetchRegisterData } from '../../../Redux/Auth/register';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Loading from '../../components/Loading/Loading';
 import { useAppNavigate } from '../../../hooks/hooks';
-import register from '../../../interfaces/Register';
+import register from '../../../interfaces/Auth';
 import { useEffect } from 'react';
 import { resetState } from '../../../Redux/Auth/register';
 import { ErrorHandling } from '../../components/Errorhandling/Error';

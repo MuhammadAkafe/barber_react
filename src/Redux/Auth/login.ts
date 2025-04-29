@@ -3,11 +3,9 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import DataState from '../../interfaces/datastate';
 import apiInstance from '../../interfaces/axiosInstance';
+import { LoginPayload } from '../../interfaces/Auth';
 
-interface LoginPayload {
-  email: string;
-  password: string;
-}
+
 
 // Initial state
 const initialState: DataState = {

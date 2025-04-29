@@ -2,24 +2,24 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {RootState} from "../../Redux/Store";
 import apiInstance from '../../interfaces/axiosInstance';
-import  AppointmentData  from '../../interfaces/AppointmentData';
+import  Add_Appointment  from '../../interfaces/AppointmentData';
 
 
 interface initialState {
-    appointments: Array<AppointmentData>
+    message: string| null
     loading: boolean;
     error: string | null;
 }
 
 const initialState: initialState = {
-    appointments: [],
+    message: null,
     loading: false,
     error: null,
 };
 
 export const addAppointmentapi = createAsyncThunk(
     'appointments/AddAppointment',
-    async (appointmentData: AppointmentData, { rejectWithValue }) => {
+    async (appointmentData: Add_Appointment, { rejectWithValue }) => {
         try {
             const response = await apiInstance.post('/AddAppointment', appointmentData);
             return response.data;
@@ -37,7 +37,7 @@ export const addAppointmentapi = createAsyncThunk(
     }
 );
 
-export const appointmentSlice = createSlice({
+export const AddappointmentSlice = createSlice({
     name: 'appointments',
     initialState,
     reducers: {},
@@ -46,20 +46,22 @@ export const appointmentSlice = createSlice({
             .addCase(addAppointmentapi.pending, (state) => {
                 state.loading = true;
                 state.error = null;
+                state.message=null
             })
             .addCase(addAppointmentapi.fulfilled, (state, action: PayloadAction<any>) => {
                 state.loading = false;
-                state.appointments=action.payload.appointments;
+                state.error = null;
+                state.message=action.payload.message;
             })
             .addCase(addAppointmentapi.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.error = action.payload.message;
+                state.message=null
             });
     },
 });
 
-export const selectAppointments = (state: RootState) => state.appointmentSlice.appointments;
-export const selectLoading = (state: RootState) => state.appointmentSlice.loading;
-export const selectError = (state: RootState) => state.appointmentSlice.error;
 
-export default appointmentSlice.reducer;
+
+
+export default AddappointmentSlice.reducer;

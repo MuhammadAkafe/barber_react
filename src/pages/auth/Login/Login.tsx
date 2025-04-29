@@ -28,10 +28,10 @@ const Login: React.FC = () => {
         e.preventDefault();
         try {
             const action = await dispatch(fetchLoginData(loginData)); // Dispatch the login action
-            // const isError=ErrorHandling(action,fetchLoginData)
-            // if(isError){  
-            //     return;
-            // }
+            const isError=ErrorHandling(action,fetchLoginData)
+            if(isError){  
+                return;
+            }
             navigate(`/MyAppointments`)
         } 
         catch (err) {

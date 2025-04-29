@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginSlice from "./Auth/login"
 import RegisterSlice from "./Auth/register"
-import  appointmentSlice  from "./User/AddAppointment"; 
+import  AddappointmentSlice  from "./User/AddAppointment"; 
 export const store = configureStore({
   reducer: {
      loginSlice, 
      RegisterSlice,
-     appointmentSlice,
+     AddappointmentSlice: AddappointmentSlice,
   },
   //devTools: process.env.NODE_ENV !== 'production',
 })
