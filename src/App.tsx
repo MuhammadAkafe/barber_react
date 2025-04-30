@@ -10,7 +10,7 @@ import './App.css';
 import Login from './pages/auth/Login/Login';
 import Register from './pages/auth/Register/Register';
 import NoPage from './pages/components/NoPage/NoPage';
-import Navbar from './pages/components/NavBar/Navbar';
+import Menu from './pages/components/Menu/Menu';
 import Profile from './pages/Profile/Profile';
 import MyAppointments from './pages/Appointments/myAppointments/MyAppointments';
 import AddAppointment from './pages/Appointments/Add_Appointments/AddAppoinment';
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      {!hideNavbar && <Navbar />}
+      {!hideNavbar && <Menu />}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/Register" element={<Register />} />
@@ -46,9 +46,9 @@ function App() {
         <Route
           path="/Profile"
           element={
-            <ProtectedRoutes>
+            // <ProtectedRoutes>
               <Profile />
-            </ProtectedRoutes>
+            // </ProtectedRoutes>
           }
         />
 

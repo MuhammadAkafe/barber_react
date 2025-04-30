@@ -51,7 +51,12 @@ const Login: React.FC = () => {
 
     return (
         <div className={styles.container}>
+           
             <form className={styles.loginfrom} onSubmit={handleLogin}>
+                <div className='logintext' style={{width:"100%",textAlign:"center"}}>
+                <h3>Login</h3>
+                </div>
+           
                 <div>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address</label>

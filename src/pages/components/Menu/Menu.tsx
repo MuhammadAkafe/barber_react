@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from  './NavBar.module.css';
+import styles from  './Menu.module.css';
 import { Link } from 'react-router-dom';
-const Navbar:React.FC=()=>{
+const Menu:React.FC=()=>{
   return (
     <nav className={`${styles.Navbar}`}>       
 <i className={`bi bi-list ${styles.menu_icon}`} data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"></i>
@@ -60,4 +60,4 @@ const Navbar:React.FC=()=>{
   )
 }
 
-export default Navbar
+export default Menu

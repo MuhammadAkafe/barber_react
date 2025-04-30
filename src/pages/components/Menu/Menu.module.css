@@ -1,5 +1,5 @@
 .Navbar {
-    background-color: rgb(0, 0, 0);
+    background-color:#1F2937;
     height: 50px;
     display: flex;
     align-items: center;
@@ -42,7 +42,7 @@ font-size: 35px;
   margin-right: 10px;
 }
 .imgbackground{
-    background-image: url('../../../images/barber.jpg');
+    /* background-image: url('../../../images/barber.jpg'); */
     background-repeat: no-repeat;
     background-size: cover;
     width: 40px;

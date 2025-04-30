@@ -67,7 +67,9 @@ function Register() {
     return (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={handleSubmit}>
+                <div style={{display:"flex",justifyContent:"center"}}>
                 <h3>Sign Up</h3>
+                </div>
                 <div className="mb-3">
                     <label htmlFor="Name" className="form-label">Name</label>
                     <input

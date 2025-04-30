@@ -2,7 +2,6 @@
 height: 100vh;
 display: flex;
 justify-content: center;
-background-color: black;
 align-items: center;
 }
 .text{
@@ -16,9 +15,8 @@ align-items: center;
     align-items: center; /* Align items to the left */
     gap: 5px; /* Add space between elements */
     padding: 25px;
-    border: 3px solid greenyellow;
     border-radius: 15px;
-    background-color: 1px solid #ccc ;
+    background-color: #1F2937 ;
   }
   
   .Addrole {

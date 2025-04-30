@@ -1,5 +1,5 @@
 .container{
-background-image: url('../../../images/barber.jpg');
+background-image: url('../../../images/login.jpg');
 background-repeat: no-repeat;
 background-size: cover;
 background-position: center;
@@ -10,8 +10,7 @@ align-items: center;
 
 }
 .loginfrom{
-    background-color: black;
-    border: solid 3px greenyellow ;
+    background-color: #1F2937;
     width: 400px;
     box-sizing: border-box;
     padding: 25px;
