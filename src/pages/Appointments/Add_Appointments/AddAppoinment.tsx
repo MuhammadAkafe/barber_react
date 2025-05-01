@@ -1,34 +1,25 @@
+import { useState, useCallback } from 'react';
+import  { Dayjs } from 'dayjs';
 import Style from './styles.module.css';
-import { DateTimePicker } from '@mui/x-date-pickers';
-import { useEffect, useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Citys from '../../components/cites/Citys';
-import  Add_Appointment, { GetAppointments }  from '../../../interfaces/AppointmentData';
 import Barber from '../../components/barber/barber';
-import Role_For from '../../components/Role_for/Role_for';
+import RoleFor from '../../components/Role_for/Role_for';
+
+import Add_Appointment from '../../../interfaces/AppointmentData';
 import { addAppointmentapi } from '../../../Redux/User/AddAppointment';
-import { thunkErrorHandling, ReduxAction } from '../Error_handling/Error';
-import { GetallappointmentApi } from '../../../Redux/User/GetAllappointments';
-import { format } from 'date-fns';
 
-interface DisableTimeParams {
-  timeValue: Dayjs;
-  clockType: 'hours' | 'minutes';
-}
-
-function AddAppoinment() 
-{
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [Appointments, setAppointment] = useState< Array<GetAppointments>| null>(null);
+function AddAppointment() {
   const { data } = useAppSelector((state) => state.loginSlice);
   const dispatch = useAppDispatch();
-  const userId = data?.payload.UserID;
 
-  const [formData, setFormData] = useState<Add_Appointment>(
-    {
+  const [formData, setFormData] = useState<Add_Appointment>({
     user_id: data?.payload.UserID ?? null,
-    slot_date: selectedDate,
+    slot_date: null,
     phone_number: data?.payload.Phonenumber ?? null,
     user_name: data?.payload.UserName ?? null,
     city: 'טירה',
@@ -36,92 +27,90 @@ function AddAppoinment()
     role_for: 'תספורית',
   });
 
-
-  const handleAccept = (datetime: Dayjs | null) => {
-    if (!datetime) {
-      console.log(`date time is required ${datetime}`);
-      return 
-    }
-
+  const handleDateChange = useCallback((datetime: Dayjs | null) => 
+    {
     setFormData((prev) => ({ ...prev, slot_date: datetime }));
-    setSelectedDate(datetime);
-  }
+  }, []);
 
-  const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
+  const handleSelectionChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => 
+      {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    },
+    []
+  );
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (!formData.slot_date) {
-        alert("Please select a date");
-        return;
-      }
-    
-      try {
-        const resultAction = await dispatch(addAppointmentapi(formData));
-        const message = thunkErrorHandling(resultAction as ReduxAction, addAppointmentapi);
-        alert(message);
-      } 
-      catch (error) {
-        console.error("Unexpected error:", error);
-        alert("An unexpected error occurred. Please try again.");
-      }
-    };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => 
+    {
+    e.preventDefault();
 
-
-
-
-
-    const handleDisableTime = () => {
-      const slotTimes = Appointments?.map(appointment =>
-        dayjs(appointment.slot_date).format('MM/DD/YY HH:mm')
-      ) || [];
-    
-      const fulldate = slotTimes.map(date => date); 
-      console.log(fulldate);
-    };
-    
-
-    // handleDisableTime()
-
-
-
+    if (!formData.slot_date) 
+      {
+      alert('אנא בחר תאריך ושעה');
+      return;
+    }
+    try {
+      const action=await dispatch(addAppointmentapi(formData));
+      console.log(action);
+    } 
+    catch (error) 
+    {
+      console.error('Unexpected error:', error);
+      alert('אירעה שגיאה בלתי צפויה. אנא נסה שוב.');
+    }
+  };
 
   return (
     <div className={Style.container}>
       <form className={Style.form} onSubmit={handleSubmit}>
-        <div className={`${Style.text}`}>הוספת תור</div>
+        <h3 className={Style.text}>הוספת תור</h3>
 
-        <div className={`${Style.text}`}>עיר</div>
+        <label className={Style.text}>עיר</label>
         <Citys formdata={formData} handleSelectionChange={handleSelectionChange} />
 
-        <div className={`${Style.text}`}>סַפָּר</div>
+        <label className={Style.text}>סַפָּר</label>
         <Barber formdata={formData} handleSelectionChange={handleSelectionChange} />
 
+        <label className={Style.text}>תפקיד</label>
+        <RoleFor formdata={formData} handleSelectionChange={handleSelectionChange} />
 
-        <div className={`${Style.text}`}>תפקיד</div>
-        <Role_For formdata={formData} handleSelectionChange={handleSelectionChange} />
-
-        <div className={`${Style.text}`}>תאריך</div>
+        <label className={Style.text}>תאריך ושעה</label>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateTimePicker
-          onChange={(newValue) => newValue && setSelectedDate(newValue)}
-          onAccept={handleAccept}
-          ampm={false}
-          disablePast
-          minutesStep={15}
-          sx={{
-            '& .MuiInputBase-input': { color: 'white' },
-            '& .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
-            '& .MuiSvgIcon-root': { color: 'white' },
-          }}
-        />
+  value={formData.slot_date}
+  onChange={handleDateChange}
+  ampm={false}
+  slotProps={{
+    textField: {
+      fullWidth: true,
+      sx: {
+        '& .MuiOutlinedInput-root': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: 'none', // This removes the outline
+        },
+        '& .MuiInputAdornment-root .MuiIconButton-root': {
+          backgroundColor: '#1F2937',
+          color: '#fff',
+        },
+      },
+    },
+  }}
+/>
 
-        <button type="submit" className="btn btn-primary">הוספה תור</button>
+</LocalizationProvider>
+
+
+        <button type="submit" className="btn btn-primary">
+          הוספה תור
+        </button>
       </form>
     </div>
   );
 }
 
-export default AddAppoinment;
+export default AddAppointment;

@@ -23,49 +23,25 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
       const currentTime = Date.now() / 1000; // Convert to seconds
       return decoded.exp > currentTime; // Check expiration
     } 
-    catch {
-      return false; // Token is invalid
-    }
-  };
-
-  // Refresh the token
-  const refreshToken = async (): Promise<boolean> => {
-    try {
-      const response = await apiInstance.post('/RefreshToken');
-      const newAccessToken = response.data.accessToken;
-      
-      if (newAccessToken) {
-        setIsAuthenticated(true);
-        // Optionally store the new access token (e.g., in Redux or memory)
-        return true;
-      } else {
-        setIsAuthenticated(false);
-        return false;
-      }
-    } 
-    catch (error) 
+    catch 
     {
-      console.error('Failed to refresh token:', error);
-      Cookies.remove('refreshToken');
-      setIsAuthenticated(false);
-      return false;
+      return false; // Token is invalid
     }
   };
 
   // Check authentication and handle token refresh
   const checkAuth = async () => {
-    if (!access_token) {
+    if (!access_token) 
+      {
       setIsAuthenticated(false);
       setLoading(false);
       return;
     }
 
     const isTokenValid = validateToken(access_token);
-    if (!isTokenValid) {
-      const refreshed = await refreshToken();
-      if (!refreshed) {
+    if (!isTokenValid) 
+      {
         setIsAuthenticated(false);
-      }
     }
      else {
       setIsAuthenticated(true);
@@ -73,7 +49,8 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
     setLoading(false); // End loading
   };
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     checkAuth(); // Validate and refresh token on mount
   }, [access_token]); // Rerun if the accessToken changes
 

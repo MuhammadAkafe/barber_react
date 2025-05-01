@@ -9,7 +9,6 @@ import { useAppNavigate } from '../../../hooks/hooks';
 import register from '../../../interfaces/Auth';
 import { useEffect } from 'react';
 import { resetState } from '../../../Redux/Auth/register';
-import { ErrorHandling } from '../../components/Errorhandling/Error';
 
 function Register() {
     const [register, setRegister] = useState<register>({
@@ -22,7 +21,7 @@ function Register() {
     });
 
     const dispatch = useAppDispatch();
-    const {loading, error } = useAppSelector((state) => state.RegisterSlice);
+    const { loading, error } = useAppSelector((state) => state.RegisterSlice);
     const navigate = useAppNavigate();
 
 
@@ -35,16 +34,14 @@ function Register() {
         e.preventDefault();
         try {
             const action = await dispatch(fetchRegisterData(register))
-            const isError=ErrorHandling(action,fetchRegisterData)
-            if(isError)
+            if (fetchRegisterData.rejected.match(action)) 
                 {
                 return;
             }
-            navigate(`/Profile`)
-        } 
-        catch (error) 
-        {
-            console.error("Login failed", error);
+            navigate(`/`)
+        }
+        catch (error) {
+            console.error("Register failed", error);
         }
 
     };
@@ -67,8 +64,9 @@ function Register() {
     return (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={handleSubmit}>
-                <div style={{display:"flex",justifyContent:"center"}}>
-                <h3>Sign Up</h3>
+
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <h3>Sign Up</h3>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="Name" className="form-label">Name</label>
@@ -135,7 +133,7 @@ function Register() {
                         required
                     />
                 </div>
-                <Loading loading={loading} error={error}  />
+                <Loading loading={loading} error={error} />
             </form>
         </div>
     );

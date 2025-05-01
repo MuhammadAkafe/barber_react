@@ -1,15 +1,12 @@
 import React, { useMemo } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import './App.css';
 
-// Components & Pages
-
+// Pages
 import Login from './pages/auth/Login/Login';
 import Register from './pages/auth/Register/Register';
-import NoPage from './pages/components/NoPage/NoPage';
+import NoPage from './pages/NoPage/NoPage';
 import Menu from './pages/components/Menu/Menu';
 import Profile from './pages/Profile/Profile';
 import MyAppointments from './pages/Appointments/myAppointments/MyAppointments';
@@ -18,37 +15,40 @@ import AddAppointment from './pages/Appointments/Add_Appointments/AddAppoinment'
 // Protected Routes
 import ProtectedRoutes from './protectedroutes/ProtectedRoutes';
 
-function App() {
+const App = () => {
   const location = useLocation();
 
-  // Define valid routes
-  const validRoutes = ['/', '/Register', '/MyAppointments', '/Profile', '/AddAppointment'];
+  // Define routes that don't need the Navbar (Menu)
+  const routesWithoutNavbar = ['/', '/Register'];
 
-  // Hide Navbar if on Login, Register, or an invalid (404) route
+  // Decide if Navbar should be hidden
   const hideNavbar = useMemo(() => {
-    return ['/', '/Register'].includes(location.pathname) || !validRoutes.includes(location.pathname);
+    const isKnownRoute = [
+      '/', 
+      '/Register', 
+      '/MyAppointments', 
+      '/Profile', 
+      '/AddAppointment'
+    ].includes(location.pathname);
+    return routesWithoutNavbar.includes(location.pathname) || !isKnownRoute;
   }, [location.pathname]);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <>
       {!hideNavbar && <Menu />}
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/Register" element={<Register />} />
-
-        <Route
-          path="/MyAppointments"
-          element={
-              <MyAppointments />
-          }
-        />
+        <Route path="/MyAppointments" element={<MyAppointments />} />
 
         <Route
           path="/Profile"
           element={
-            // <ProtectedRoutes>
+            // Uncomment below to protect this route when needed
+            <ProtectedRoutes>
               <Profile />
-            // </ProtectedRoutes>
+             </ProtectedRoutes>
           }
         />
 
@@ -61,11 +61,11 @@ function App() {
           }
         />
 
-        {/* Catch-all for 404 (NoPage) */}
+        {/* Fallback route for 404 */}
         <Route path="*" element={<NoPage />} />
       </Routes>
-    </LocalizationProvider>
+    </>
   );
-}
+};
 
 export default App;

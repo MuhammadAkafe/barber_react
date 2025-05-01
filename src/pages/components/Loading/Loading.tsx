@@ -4,16 +4,19 @@ import styles from './Loading.module.css';
 
 interface LoadingProps {
   loading: boolean;
-  error: string | null;
+  error:  null |string;
 }
 
 
 function Loading({ loading, error }: LoadingProps) {
+  
   return (
     <>
       <div className={styles.submit}>
         <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? 'Submitting...' : 'Submit'}
+          {loading ? <div className="spinner-border text-info" role="status">
+  <span className="visually-hidden">Loading...</span>
+</div> : 'Submit'}
         </button>
       </div>
       <div className={styles.message}>

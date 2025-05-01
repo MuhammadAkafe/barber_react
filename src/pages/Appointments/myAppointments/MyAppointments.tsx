@@ -37,12 +37,9 @@ function MyAppointments() {
       setCurrentPage(page);
     }
   };
-
   
-
   const handle_appoinments=(id:number |string)=>
     {
-      alert(id);
   }
 
 

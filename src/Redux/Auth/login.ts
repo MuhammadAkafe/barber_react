@@ -8,11 +8,12 @@ import { LoginPayload } from '../../interfaces/Auth';
 
 
 // Initial state
-const initialState: DataState = {
+const initialState: DataState = 
+{
     data:null,
     access_token:null,
     loading: false,
-    error: null,
+    error: null 
 };
 
 
@@ -23,14 +24,12 @@ export const fetchLoginData  = createAsyncThunk('login/fetchData', async (login:
         const action = await apiInstance.post(`/Login`,login);
         return action.data;
     } 
-
 catch (error: any) 
 {
-  if (axios.isAxiosError(error) && error.response) {
-    // Backend responded with an error
+  if (axios.isAxiosError(error) && error.response) 
+    {
     return rejectWithValue(error.response?.data);
   }
-  // Other errors (e.g., network issues)
   return rejectWithValue({ message: error.message || 'Unknown error occurred' });
 }
 });
@@ -64,7 +63,8 @@ const loginSlice = createSlice({
         .addCase(fetchLoginData.rejected, (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.data = null;
-          state.error = action.payload?.message || 'An error occurred';
+          state.access_token = null;
+          state.error = (action.payload?.message || 'An error occurred');
         });
     },
 });

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 export default interface Add_Appointment {
   user_id: string | null ;
   user_name: string | null ;
-  slot_date: dayjs.Dayjs |null | string;
+  slot_date:dayjs.Dayjs | null | undefined
   phone_number: string | null;
   city: string ;
   barber: string ;

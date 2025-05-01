@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../../../Redux/Store'; // Adjust import path based on your project structure
+import { AppDispatch } from '../../../Redux/Store'; // Adjust import path based on your project structure
 import { fetchLoginData,resetState  } from '../../../Redux/Auth/login'; // Assume `authSlice` contains a `loginUser` thunk
 import { useAppNavigate } from '../../../hooks/hooks';
 import { useAppSelector } from '../../../hooks/hooks';
 import { useEffect } from 'react';
 import Loading from '../../components/Loading/Loading';
-import { ErrorHandling } from '../../components/Errorhandling/Error';
+
 const Login: React.FC = () => {
     const [loginData, setLoginData] = useState({
         email: "",
@@ -23,25 +23,28 @@ const Login: React.FC = () => {
         dispatch(resetState());
     }, [dispatch]);
 
-    const handleLogin = async (e: React.FormEvent) => 
-        {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const action = await dispatch(fetchLoginData(loginData)); // Dispatch the login action
-            const isError=ErrorHandling(action,fetchLoginData)
-            if(isError){  
-                return;
-            }
-            navigate(`/MyAppointments`)
+          const action = await dispatch(fetchLoginData(loginData));
+          
+          // Check if the thunk was rejected
+          if (fetchLoginData.rejected.match(action)) {
+            return;
+          }
+          // Success
+          navigate('/Profile');
         } 
         catch (err) {
-            console.error("Login failed", err);
+          console.error("Unexpected error", err);
         }
-    };
+      };
+      
 
 
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => 
+        {
         const { name, value } = e.target;
         setLoginData((prevData) => ({
             ...prevData,
