@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from  './Menu.module.css';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppSelector } from '../../../Redux/Store';
 const Menu:React.FC=()=>{
 
     const { data } = useAppSelector((state) => state.loginSlice);
@@ -28,7 +28,7 @@ const Menu:React.FC=()=>{
   </span>
   </Link>
 
-  <Link className={`${styles.li}`} to={"/MyAppointments"}>
+  <Link className={`${styles.li}`} to={"/GetUserAppointments"}>
   <i className="bi bi-calendar3"></i>
   <span className={`${styles.span}`}>
    הפגישות שלי

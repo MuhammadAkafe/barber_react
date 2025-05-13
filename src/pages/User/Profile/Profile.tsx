@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from  './Profile.module.css';
 import { useState } from 'react';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppSelector } from '../../../Redux/Store';
 const Profile:React.FC=():JSX.Element=>{
 
       const [profile, setprofiledata] = useState<Record<string,string>>({

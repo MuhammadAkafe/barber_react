@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import {RootState} from "../../Redux/Store";
-import apiInstance from '../../interfaces/axiosInstance';
-import  Add_Appointment  from '../../interfaces/AppointmentData';
+import {RootState} from "../../Store";
+import apiInstance from '../../../interfaces/axiosInstance';
+import  Add_Appointment  from '../../../interfaces/AppointmentData';
 
 
 interface initialState {
@@ -17,7 +17,7 @@ const initialState: initialState = {
     error: null,
 };
 
-export const addAppointmentapi = createAsyncThunk(
+export const AddAppointmentApi = createAsyncThunk(
     'appointments/AddAppointment',
     async (appointmentData: Add_Appointment, { rejectWithValue }) => {
         try {
@@ -43,17 +43,17 @@ export const AddappointmentSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(addAppointmentapi.pending, (state) => {
+            .addCase(AddAppointmentApi.pending, (state) => {
                 state.loading = true;
                 state.error = null;
                 state.message=null
             })
-            .addCase(addAppointmentapi.fulfilled, (state, action: PayloadAction<any>) => {
+            .addCase(AddAppointmentApi.fulfilled, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.error = null;
                 state.message=action.payload.message;
             })
-            .addCase(addAppointmentapi.rejected, (state, action: PayloadAction<any>) => {
+            .addCase(AddAppointmentApi.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.error = action.payload.message;
                 state.message=null

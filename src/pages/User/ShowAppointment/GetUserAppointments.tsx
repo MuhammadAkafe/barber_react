@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Style from './style.module.css';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Redux/Store';
 import { format } from 'date-fns';
-import { GetallappointmentApi } from '../../../Redux/User/GetAllappointments';
+import { GetUserAppointments_ } from '../../../Redux/User/Appointments/GetAllappointments';
 import { GetAppointments } from '../../../interfaces/AppointmentData';
 import { jwtDecode } from 'jwt-decode';
 
 
-function MyAppointments() {
+function GetUserAppointments(): JSX.Element {
   const dispatch = useAppDispatch();
   const { data, access_token } = useAppSelector((state) => state.loginSlice);
   const [appointments, setAppointments] = useState<GetAppointments[]>([]);
@@ -17,13 +17,7 @@ function MyAppointments() {
   const decoded = access_token ? jwtDecode(access_token) : null;
 
   useEffect(() => {
-    const fetch_data = async () => {
-      if (userId) {
-        const { payload } = await dispatch(GetallappointmentApi(userId));
-        setAppointments(payload || []);
-      }
-    };
-    fetch_data();
+    
   }, [userId, dispatch]);
 
   const totalPages = Math.ceil(appointments.length / ITEMS_PER_PAGE);
@@ -103,4 +97,4 @@ function MyAppointments() {
   );
 }
 
-export default MyAppointments;
+export default GetUserAppointments;

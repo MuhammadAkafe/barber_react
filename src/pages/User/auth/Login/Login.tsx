@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../Redux/Store'; // Adjust import path based on your project structure
-import { fetchLoginData,resetState  } from '../../../Redux/Auth/login'; // Assume `authSlice` contains a `loginUser` thunk
-import { useAppNavigate } from '../../../hooks/hooks';
-import { useAppSelector } from '../../../hooks/hooks';
+import { fetchLoginData,resetState  } from '../../../../Redux/User/Auth/login'; 
+import { useAppNavigate,useAppSelector,AppDispatch } from '../../../../Redux/Store'
 import { useEffect } from 'react';
-import Loading from '../../components/Loading/Loading';
+import Loading from '../../../components/Loading/Loading';
 
 const Login: React.FC = () => {
     const [loginData, setLoginData] = useState({

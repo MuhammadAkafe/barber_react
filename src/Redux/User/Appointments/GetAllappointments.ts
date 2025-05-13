@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import apiInstance from '../../interfaces/axiosInstance';
-import { GetAppointments } from '../../interfaces/AppointmentData';
+import apiInstance from '../../../interfaces/axiosInstance';
+import { GetAppointments } from '../../../interfaces/AppointmentData';
 
 
 
@@ -19,29 +19,27 @@ const initialState: initialState = {
 
 
 
-export const GetallappointmentApi = createAsyncThunk(
+export const GetUserAppointments_ = createAsyncThunk(
     'getallappointmentSlice/GetallAppointments',
-    async (user_id :string | number, { rejectWithValue }) => {
+    async (_, thunkAPI) => {
         try {
-            const response = await apiInstance.get('/GetallAppointments',{
-                params:{
-                    user_id
-                }
-            });
+        const userid = 'someUserId'; // Replace with actual user ID logic
+        const offset = 0; // Replace with actual offset logic
+        const response = await apiInstance.get(`/GetUserAppointments${userid}${offset}`);
             return response.data;
         } 
         catch (error: any) 
         {
-            if (axios.isAxiosError(error) && error.response) 
-                {
-                // Backend responded with an error
-                return rejectWithValue(error.response?.data);
-              }
-              // Other errors (e.g., network issues)
-              return rejectWithValue({ message: error.message || 'Unknown error occurred' });
-        }
+            if (axios.isAxiosError(error) && error.response) {
+                return thunkAPI.rejectWithValue(error.response?.data);
+            } else 
+            {
+                return thunkAPI.rejectWithValue({ message: error.message || 'Unknown error occurred' });
+            }
+    }
     }
 );
+
 
 
 
@@ -51,16 +49,16 @@ export const getallappointmentSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(GetallappointmentApi.pending, (state) => {
+            .addCase(GetUserAppointments_.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(GetallappointmentApi.fulfilled, (state, action: PayloadAction<any>) => {
+            .addCase(GetUserAppointments_.fulfilled, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.appointments=action.payload.appointments
                 state.error = null;
             })
-            .addCase(GetallappointmentApi.rejected, (state, action: PayloadAction<any>) => {
+            .addCase(GetUserAppointments_.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.appointments=null
                 state.error = action.payload.message;

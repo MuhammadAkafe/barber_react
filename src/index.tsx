@@ -5,6 +5,8 @@ import "./index.css"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './Redux/Store';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,9 +15,12 @@ root.render(
   <React.StrictMode>
    <Provider store={store}>
     <BrowserRouter>
-    <App/>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Routes>
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </LocalizationProvider>
     </BrowserRouter>
-
    </Provider>
   </React.StrictMode>
 

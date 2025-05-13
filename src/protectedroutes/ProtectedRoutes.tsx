@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
 import apiInstance from '../interfaces/axiosInstance';
 import Cookies from 'js-cookie';
-import { useAppSelector } from '../hooks/hooks';
+import { useAppSelector } from '../Redux/Store';
 
 interface ProtectedRoutesProps {
   children: JSX.Element;

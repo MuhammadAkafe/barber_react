@@ -2,13 +2,13 @@ import React, { useState, FormEvent, ChangeEvent } from 'react';
 import styles from './Register.module.css';
 import PhoneInput, { Value as PhoneValue } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { fetchRegisterData } from '../../../Redux/Auth/register';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import Loading from '../../components/Loading/Loading';
-import { useAppNavigate } from '../../../hooks/hooks';
-import register from '../../../interfaces/Auth';
+import { fetchRegisterData } from '../../../../Redux/User/Auth/register';
+import { useAppDispatch, useAppSelector } from '../../../../Redux/Store';
+import Loading from '../../../components/Loading/Loading';
+import { useAppNavigate } from '../../../../Redux/Store';
+import register from '../../../../interfaces/Auth';
 import { useEffect } from 'react';
-import { resetState } from '../../../Redux/Auth/register';
+import { resetState } from '../../../../Redux/User/Auth/register';
 
 function Register() {
     const [register, setRegister] = useState<register>({

@@ -1,8 +1,8 @@
 // features/dataSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import DataState from '../../interfaces/datastate';
-import { apiInstance } from '../../interfaces/axiosInstance';
+import DataState from '../../../interfaces/datastate';
+import { apiInstance } from '../../../interfaces/axiosInstance';
 
 
 interface RegisterPayload {
