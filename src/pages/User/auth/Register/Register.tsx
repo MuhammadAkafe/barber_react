@@ -1,14 +1,54 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
-import styles from './Register.module.css';
 import PhoneInput, { Value as PhoneValue } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import { fetchRegisterData } from '../../../../Redux/User/Auth/register';
 import { useAppDispatch, useAppSelector } from '../../../../Redux/Store';
-import Loading from '../../../components/Loading/Loading';
 import { useAppNavigate } from '../../../../Redux/Store';
 import register from '../../../../interfaces/Auth';
 import { useEffect } from 'react';
 import { resetState } from '../../../../Redux/User/Auth/register';
+import { Link } from 'react-router-dom';
+
+// Add custom styles for PhoneInput
+const phoneInputStyles = `
+  .PhoneInput {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .PhoneInputCountry {
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+  .PhoneInputCountryIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .PhoneInputCountrySelect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    border: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .PhoneInputInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.875rem;
+    padding: 0;
+    width: 100%;
+  }
+  .PhoneInputInput:focus {
+    outline: none;
+  }
+`;
 
 function Register() {
     const [register, setRegister] = useState<register>({
@@ -24,8 +64,6 @@ function Register() {
     const { loading, error } = useAppSelector((state) => state.RegisterSlice);
     const navigate = useAppNavigate();
 
-
-
     useEffect(() => {
         dispatch(resetState());
     }, [dispatch]);
@@ -34,8 +72,7 @@ function Register() {
         e.preventDefault();
         try {
             const action = await dispatch(fetchRegisterData(register))
-            if (fetchRegisterData.rejected.match(action)) 
-                {
+            if (fetchRegisterData.rejected.match(action)) {
                 return;
             }
             navigate(`/`)
@@ -43,7 +80,6 @@ function Register() {
         catch (error) {
             console.error("Register failed", error);
         }
-
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -62,80 +98,133 @@ function Register() {
     };
 
     return (
-        <div className={styles.container}>
-            <form className={styles.form} onSubmit={handleSubmit}>
+        <>
+            <style>{phoneInputStyles}</style>
+            <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-12 col-sm-10 col-md-8 col-lg-6">
+                            <div className="card shadow">
+                                <div className="card-body p-4">
+                                    <div className="text-center mb-4">
+                                        <h2 className="h3 mb-2">Create Account</h2>
+                                        <p className="text-muted">Join us and start your journey</p>
+                                    </div>
 
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                    <h3>Sign Up</h3>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="Name" className="form-label">Name</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="Name"
-                        name="username"
-                        value={register.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                                    <form onSubmit={handleSubmit}>
+                                        <div className="row g-3">
+                                            <div className="col-md-6">
+                                                <div className="mb-3">
+                                                    <label htmlFor="Name" className="form-label">Full Name</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="Name"
+                                                        name="username"
+                                                        value={register.username}
+                                                        onChange={handleChange}
+                                                        required
+                                                        placeholder="Enter your full name"
+                                                    />
+                                                </div>
+                                            </div>
 
-                {/* Email Input */}
-                <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        id="exampleInputEmail1"
-                        name="email"
-                        value={register.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                                            <div className="col-md-6">
+                                                <div className="mb-3">
+                                                    <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
+                                                    <input
+                                                        type="email"
+                                                        className="form-control"
+                                                        id="exampleInputEmail1"
+                                                        name="email"
+                                                        value={register.email}
+                                                        onChange={handleChange}
+                                                        required
+                                                        placeholder="Enter your email"
+                                                    />
+                                                </div>
+                                            </div>
 
-                {/* Phone Number Input */}
-                <div className="mb-3">
-                    <label htmlFor="phone" className="form-label">Phone Number</label>
-                    <PhoneInput
-                        defaultCountry="IL"
-                        value={register.phonenumber}
-                        onChange={handlePhoneChange}
-                        required
-                    />
-                </div>
+                                            <div className="col-md-6">
+                                                <div className="mb-3">
+                                                    <label htmlFor="phone" className="form-label">Phone Number</label>
+                                                    <PhoneInput
+                                                        defaultCountry="IL"
+                                                        value={register.phonenumber}
+                                                        onChange={handlePhoneChange}
+                                                        required
+                                                        className="form-control"
+                                                        international
+                                                        countryCallingCodeEditable={false}
+                                                        placeholder="Enter phone number"
+                                                    />
+                                                </div>
+                                            </div>
 
-                {/* Password Input */}
-                <div className="mb-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        id="exampleInputPassword1"
-                        name="password"
-                        value={register.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                                            <div className="col-md-6">
+                                                <div className="mb-3">
+                                                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                                                    <input
+                                                        type="password"
+                                                        className="form-control"
+                                                        id="exampleInputPassword1"
+                                                        name="password"
+                                                        value={register.password}
+                                                        onChange={handleChange}
+                                                        required
+                                                        placeholder="Create a password"
+                                                    />
+                                                </div>
+                                            </div>
 
-                {/* Confirm Password Input */}
-                <div className="mb-3">
-                    <label htmlFor="exampleInputConfirmPassword1" className="form-label">Confirm Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        id="exampleInputConfirmPassword1"
-                        name="confirm_password"
-                        value={register.confirm_password}
-                        onChange={handleChange}
-                        required
-                    />
+                                            <div className="col-12">
+                                                <div className="mb-3">
+                                                    <label htmlFor="exampleInputConfirmPassword1" className="form-label">Confirm Password</label>
+                                                    <input
+                                                        type="password"
+                                                        className="form-control"
+                                                        id="exampleInputConfirmPassword1"
+                                                        name="confirm_password"
+                                                        value={register.confirm_password}
+                                                        onChange={handleChange}
+                                                        required
+                                                        placeholder="Confirm your password"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div className="d-grid gap-3 mt-4">
+                                            <button
+                                                type="submit"
+                                                disabled={loading}
+                                                className="btn btn-primary py-2"
+                                            >
+                                                Create Account
+                                            </button>
+
+                                            <div className="text-center">
+                                                <p className="text-muted mb-0">
+                                                    Already have an account?{' '}
+                                                    <Link 
+                                                        to="/" 
+                                                        className="text-decoration-none"
+                                                    >
+                                                        Sign in
+                                                    </Link>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <Loading loading={loading} error={error} />
-            </form>
-        </div>
+            </div>
+        </>
     );
 }
 

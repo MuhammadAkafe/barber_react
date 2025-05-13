@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import styles from './Login.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchLoginData,resetState  } from '../../../../Redux/User/Auth/login'; 
-import { useAppNavigate,useAppSelector,AppDispatch } from '../../../../Redux/Store'
+import { fetchLoginData, resetState } from '../../../../Redux/User/Auth/login'; 
+import { useAppNavigate, useAppSelector, AppDispatch } from '../../../../Redux/Store'
 import { useEffect } from 'react';
-import Loading from '../../../components/Loading/Loading';
 
 const Login: React.FC = () => {
     const [loginData, setLoginData] = useState({
@@ -24,25 +22,19 @@ const Login: React.FC = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-          const action = await dispatch(fetchLoginData(loginData));
-          
-          // Check if the thunk was rejected
-          if (fetchLoginData.rejected.match(action)) {
-            return;
-          }
-          // Success
-          navigate('/Profile');
+            const action = await dispatch(fetchLoginData(loginData));
+            
+            if (fetchLoginData.rejected.match(action)) {
+                return;
+            }
+            navigate('/Profile');
         } 
         catch (err) {
-          console.error("Unexpected error", err);
+            console.error("Unexpected error", err);
         }
-      };
-      
+    };
 
-
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => 
-        {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setLoginData((prevData) => ({
             ...prevData,
@@ -51,46 +43,73 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className={styles.container}>
-           
-            <form className={styles.loginfrom} onSubmit={handleLogin}>
-                <div className='logintext' style={{width:"100%",textAlign:"center"}}>
-                <h3>Login</h3>
-                </div>
-           
-                <div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email address</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            name="email"
-                            id="email"
-                            value={loginData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                        <div id="emailHelp" className="form-text">
-                            We'll never share your email with anyone else.
+        <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+            <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-12 col-sm-8 col-md-6 col-lg-4">
+                        <div className="card shadow">
+                            <div className="card-body p-4">
+                                <div className="text-center mb-4">
+                                    <h2 className="h3 mb-2">Welcome Back</h2>
+                                    <p className="text-muted">Sign in to your account</p>
+                                </div>
+
+                                <form onSubmit={handleLogin}>
+                                    <div className="mb-3">
+                                        <label htmlFor="email" className="form-label">Email address</label>
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            id="email"
+                                            name="email"
+                                            value={loginData.email}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="Enter your email"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="password" className="form-label">Password</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            name="password"
+                                            value={loginData.password}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="Enter your password"
+                                        />
+                                    </div>
+
+                                    <div className="d-grid gap-3">
+                                        <button
+                                            type="submit"
+                                            disabled={loading}
+                                            className="btn btn-primary py-2"
+                                        >
+                                            Sign in
+                                        </button>
+
+                                        <div className="text-center">
+                                            <p className="text-muted mb-0">
+                                                Don't have an account?{' '}
+                                                <Link 
+                                                    to="/Register" 
+                                                    className="text-decoration-none"
+                                                >
+                                                    Sign up
+                                                </Link>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            name="password"
-                            id="password"
-                            value={loginData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <Loading loading={loading} error={error} />
-                    <Link to="/Register">SignUp</Link>
-                </div>     
-            </form>
-          
+                </div>
+            </div>
         </div>
     );
 };

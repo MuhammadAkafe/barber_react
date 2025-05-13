@@ -1,67 +1,159 @@
 import React from 'react'
-import styles from  './Profile.module.css';
 import { useState } from 'react';
 import { useAppSelector } from '../../../Redux/Store';
-const Profile:React.FC=():JSX.Element=>{
+import { CameraIcon, PencilIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-      const [profile, setprofiledata] = useState<Record<string,string>>({
-          username: '',
-          email: '',
-          phonenumber: '',
-          password: '',
-      });
-      const [isedited,setEdited]=useState<boolean>(false);
-      const { data } = useAppSelector((state) => state.loginSlice);
-      
+const Profile: React.FC = (): JSX.Element => {
+  const [profile, setProfileData] = useState<Record<string, string>>({
+    username: '',
+    email: '',
+    phonenumber: '',
+    password: '',
+  });
+  const [isEdited, setEdited] = useState<boolean>(false);
+  const { data } = useAppSelector((state) => state.loginSlice);
 
-      const handle_edit=()=>
-        {
-          setEdited(!isedited);
-        }
+  const handleEdit = () => {
+    setEdited(!isEdited);
+  }
 
+  const handleSave = () => {
+    // Add your save logic here
+    setEdited(false);
+  }
 
+  const handleCancel = () => {
+    setEdited(false);
+  }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProfileData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
 
+  return (
+    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light py-4">
+      <div className="card shadow-sm w-100" style={{ maxWidth: '600px' }}>
+        <div className="card-body p-4">
+          <div className="text-center mb-4">
+            <div className="position-relative d-inline-block mb-3">
+              <div className="rounded-circle bg-primary bg-opacity-10 p-4">
+                <CameraIcon className="text-primary" style={{ width: '48px', height: '48px' }} />
+              </div>
+              <button className="btn btn-sm btn-primary rounded-circle position-absolute bottom-0 end-0">
+                <PencilIcon style={{ width: '16px', height: '16px' }} />
+              </button>
+            </div>
+            <h2 className="h3 mb-2">Profile Information</h2>
+            <p className="text-muted">Manage your account details</p>
+          </div>
 
-  return (<>
-  <div className={`${styles.container}`}>
-    <form action="">
-    <div className={styles.imgcontainer}>
-  <img className={styles.imgbackground} src="images/avatar.png"  />
-</div>
+          <form className="needs-validation" noValidate>
+            <div className="row g-3">
+              <div className="col-12">
+                <label htmlFor="username" className="form-label">Username</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    name="username"
+                    value={profile.username}
+                    onChange={handleChange}
+                    disabled={!isEdited}
+                    required
+                  />
+                </div>
+              </div>
 
-    <div className="mb-3 row">
-    <label htmlFor="UserName" className="col-sm-2 col-form-label"  >UserName</label>
-    <div className="col-sm-10">
-      <input type="text"  className="form-control-plaintext" id="UserName" value={data?.payload.UserName}  disabled={isedited}/>
+              <div className="col-12">
+                <label htmlFor="email" className="form-label">Email</label>
+                <div className="input-group">
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    value={profile.email}
+                    onChange={handleChange}
+                    disabled={!isEdited}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="phonenumber" className="form-label">Phone Number</label>
+                <div className="input-group">
+                  <input
+                    type="tel"
+                    className="form-control"
+                    id="phonenumber"
+                    name="phonenumber"
+                    value={profile.phonenumber}
+                    onChange={handleChange}
+                    disabled={!isEdited}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="password" className="form-label">Password</label>
+                <div className="input-group">
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    value={profile.password}
+                    onChange={handleChange}
+                    disabled={!isEdited}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="col-12 d-flex justify-content-end gap-2 mt-4">
+                {!isEdited ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleEdit}
+                  >
+                    <PencilIcon style={{ width: '16px', height: '16px' }} className="me-2" />
+                    Edit Profile
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={handleCancel}
+                    >
+                      <XMarkIcon style={{ width: '16px', height: '16px' }} className="me-2" />
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handleSave}
+                    >
+                      <CheckIcon style={{ width: '16px', height: '16px' }} className="me-2" />
+                      Save Changes
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-    <div className="mb-3 row">
-    <label htmlFor="staticEmail" className="col-sm-2 col-form-label" >Email</label>
-    <div className="col-sm-10">
-      <input type="text"  className="form-control-plaintext" id="staticEmail"   disabled={isedited}/>
-    </div>
-  </div>
-  <div className="mb-3 row">
-    <label htmlFor="staticpassword" className="col-sm-2 col-form-label" >Password</label>
-    <div className="col-sm-10">
-      <input type="password"  className="form-control-plaintext" id="statstaticpassword"   disabled={isedited}/>
-    </div>
-  </div>
-
-  <div className="mb-3 row">
-    <label htmlFor="PhoneNumber" className="col-sm-2 col-form-label" >PhoneNumber</label>
-    <div className="col-sm-10">
-      <input type="text"  className="form-control-plaintext" id="PhoneNumber" value={data?.payload.Phonenumber} disabled={isedited}/>
-    </div>
-  </div>
-
-  <button type="button" className="btn btn-primary" onClick={handle_edit} >{isedited? "save":"edit"}</button>
-
-    </form>
-</div>
-  </>
-  );
+  )
 }
 
 export default Profile
