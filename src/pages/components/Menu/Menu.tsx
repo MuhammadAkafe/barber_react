@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../Redux/Store';
 
 const Menu: React.FC = () => {
-    const { data } = useAppSelector((state) => state.loginSlice);
+
 
     return (
-        <nav style={{ height: '3em', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 1rem'}}>       
-            <i className="bi bi-list" style={{ fontSize: '1.5rem', cursor: 'pointer' }} data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"></i>
+        <nav style={{ height: '3em', display: 'flex', justifyContent: 'space-between', 
+        alignItems: 'center', padding: '0 1rem',backgroundColor:"#0D6EFD"}}>       
+            <i className="bi bi-list" style={{ fontSize: '1.5rem', cursor: 'pointer',color:"white" }} data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"></i>
 
             <div className="offcanvas offcanvas-start" data-bs-backdrop="static" tabIndex={-1} id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                 <div className="offcanvas-header">
@@ -83,16 +84,21 @@ const Menu: React.FC = () => {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '0.9rem' }}>{data?.payload.UserName || "YourName"}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' ,
+                fontFamily:"'Poppins', sans-serif",
+                fontWeight:"bold",
+                color:"white"
+            }}>
+                <span style={{ fontSize: '1rem' }}>{""}</span>
                 <img 
                     src="images/avatar.png" 
                     alt="Profile" 
                     style={{ 
-                        width: '1.8em', 
-                        height: '1.8em', 
+                        width: '2.5em', 
+                        height: '2.5em', 
                         borderRadius: '50%',
-                        objectFit: 'cover'
+                        objectFit: 'cover',
+                        border: '2px solid rgb(29, 219, 121)'
                     }} 
                 />
             </div>

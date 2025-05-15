@@ -12,12 +12,13 @@ export default interface Add_Appointment {
 
 
 export interface GetAppointments {
-  appointment_id:string | number
   userid: string | number,
-  username: string
+  barber_id: string | number,
+  appointment_id:string | number
+  appointment_date: string,
+  appointment_time: string,
+  city: string,
   phonenumber: string
-  barber: string
-  slot_date: string
   rolefor: string
 }
 

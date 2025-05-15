@@ -4,11 +4,13 @@ import RegisterSlice from "./User/Auth/register"
 import  AddappointmentSlice  from "./User/Appointments/AddAppointment"; 
 import { useDispatch,useSelector,useStore  } from "react-redux";
 import { useNavigate,NavigateFunction } from 'react-router-dom';
+import GetallappointmentSlice from "./User/Appointments/GetAllappointments";
 export const store = configureStore({
   reducer: {
      loginSlice, 
      RegisterSlice,
      AddappointmentSlice: AddappointmentSlice,
+     GetallappointmentSlice: GetallappointmentSlice,
   },
   //devTools: process.env.NODE_ENV !== 'production',
 })

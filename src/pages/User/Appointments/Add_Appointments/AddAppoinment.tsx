@@ -60,25 +60,25 @@ function AddAppointment(): JSX.Element {
   };
 
   return (
-    <div className="container py-5">
+    <div className="container py-5" >
       <div className="row justify-content-center">
         <div className="col-md-8 col-lg-6">
           <div className="card shadow-lg border-0 rounded-4">
             <div className="card-body p-4 p-md-5">
               <div className="text-center mb-4">
                 <h2 className="card-title fw-bold text-primary mb-2">
-                  Book an Appointment
+                  קבע תור
                 </h2>
-                <p className="text-muted">Schedule your next grooming session with us</p>
+                <p className="text-muted">קבע את פגישת הטיפוח הבאה שלך איתנו</p>
               </div>
               
-              <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+              <form onSubmit={handleSubmit} className="needs-validation" noValidate dir="rtl">
               <div className="mb-4">
                   <label htmlFor="barber" className="form-label fw-medium">
-                  barber
+                  ספר
                   </label>
                   <div className="input-group">
-                    <span className="input-group-text bg-light">
+                    <span className="input-group-text bg-light" style={{ transform: 'rotate(-180deg)' }}>
                       <ScissorsIcon className="h-5 w-5 text-primary" />
                     </span>
                     <select
@@ -89,7 +89,7 @@ function AddAppointment(): JSX.Element {
                       required
                       className="form-select"
                     >
-                      <option value="">Select a barber</option>
+                      <option value="">בחר ספר</option>
                       {formData.barbers?.map((barber:string,index:number) => (
                         <option key={index} value={barber}>
                           {barber}
@@ -100,10 +100,10 @@ function AddAppointment(): JSX.Element {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="service" className="form-label fw-medium">
-                    Select Service
+                    בחר שירות
                   </label>
                   <div className="input-group">
-                    <span className="input-group-text bg-light">
+                    <span className="input-group-text bg-light" style={{ transform: 'rotate(-180deg)' }}>
                       <ScissorsIcon className="h-5 w-5 text-primary" />
                     </span>
                     <select
@@ -114,7 +114,7 @@ function AddAppointment(): JSX.Element {
                       required
                       className="form-select"
                     >
-                      <option value="">Select a service</option>
+                      <option value="">בחר שירות</option>
                       {services.map((service) => (
                         <option key={service} value={service}>
                           {service}
@@ -127,10 +127,10 @@ function AddAppointment(): JSX.Element {
                 <div className="row g-3 mb-4">
                   <div className="col-md-6">
                     <label htmlFor="date" className="form-label fw-medium">
-                      Date
+                      תאריך
                     </label>
                     <div className="input-group">
-                      <span className="input-group-text bg-light">
+                      <span className="input-group-text bg-light" style={{ transform: 'rotate(-180deg)' }}>
                         <CalendarIcon className="h-5 w-5 text-primary" />
                       </span>
                       <input
@@ -148,10 +148,10 @@ function AddAppointment(): JSX.Element {
 
                   <div className="col-md-6">
                     <label htmlFor="time" className="form-label fw-medium">
-                      Time
+                      שעה
                     </label>
                     <div className="input-group">
-                      <span className="input-group-text bg-light">
+                      <span className="input-group-text bg-light" style={{ transform: 'rotate(-180deg)' }}>
                         <ClockIcon className="h-5 w-5 text-primary" />
                       </span>
                       <input
@@ -169,10 +169,10 @@ function AddAppointment(): JSX.Element {
 
                 <div className="mb-4">
                   <label htmlFor="notes" className="form-label fw-medium">
-                    Additional Notes
+                    הערות נוספות
                   </label>
                   <div className="input-group">
-                    <span className="input-group-text bg-light">
+                    <span className="input-group-text bg-light" style={{ transform: 'rotate(-180deg)' }}>
                       <DocumentTextIcon className="h-5 w-5 text-primary" />
                     </span>
                     <textarea
@@ -182,7 +182,7 @@ function AddAppointment(): JSX.Element {
                       onChange={handleInputChange}
                       rows={3}
                       className="form-control"
-                      placeholder="Any special requests or requirements?"
+                      placeholder="בקשות או דרישות מיוחדות?"
                     />
                   </div>
                 </div>
@@ -200,8 +200,8 @@ function AddAppointment(): JSX.Element {
                       </>
                     ) : (
                       <>
-                        Book Appointment
-                        <i className="bi bi-arrow-right ms-2"></i>
+                        קבע תור
+                        <i className="bi bi-arrow-left ms-2"></i>
                       </>
                     )}
                   </button>

@@ -35,7 +35,7 @@ const Profile: React.FC = (): JSX.Element => {
   }
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light py-4">
+    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light py-4" dir="rtl">
       <div className="card shadow-sm w-100" style={{ maxWidth: '600px' }}>
         <div className="card-body p-4">
           <div className="text-center mb-4">
@@ -47,14 +47,14 @@ const Profile: React.FC = (): JSX.Element => {
                 <PencilIcon style={{ width: '16px', height: '16px' }} />
               </button>
             </div>
-            <h2 className="h3 mb-2">Profile Information</h2>
-            <p className="text-muted">Manage your account details</p>
+            <h2 className="h3 mb-2">מידע אישי</h2>
+            <p className="text-muted">נהל את פרטי החשבון שלך</p>
           </div>
 
-          <form className="needs-validation" noValidate>
+          <form className="needs-validation" noValidate >
             <div className="row g-3">
               <div className="col-12">
-                <label htmlFor="username" className="form-label">Username</label>
+                <label htmlFor="username" className="form-label">שם משתמש</label>
                 <div className="input-group">
                   <input
                     type="text"
@@ -70,7 +70,7 @@ const Profile: React.FC = (): JSX.Element => {
               </div>
 
               <div className="col-12">
-                <label htmlFor="email" className="form-label">Email</label>
+                <label htmlFor="email" className="form-label">דואר אלקטרוני</label>
                 <div className="input-group">
                   <input
                     type="email"
@@ -86,7 +86,7 @@ const Profile: React.FC = (): JSX.Element => {
               </div>
 
               <div className="col-12">
-                <label htmlFor="phonenumber" className="form-label">Phone Number</label>
+                <label htmlFor="phonenumber" className="form-label">מספר טלפון</label>
                 <div className="input-group">
                   <input
                     type="tel"
@@ -102,7 +102,7 @@ const Profile: React.FC = (): JSX.Element => {
               </div>
 
               <div className="col-12">
-                <label htmlFor="password" className="form-label">Password</label>
+                <label htmlFor="password" className="form-label">סיסמה</label>
                 <div className="input-group">
                   <input
                     type="password"
@@ -125,7 +125,7 @@ const Profile: React.FC = (): JSX.Element => {
                     onClick={handleEdit}
                   >
                     <PencilIcon style={{ width: '16px', height: '16px' }} className="me-2" />
-                    Edit Profile
+                    ערוך פרופיל
                   </button>
                 ) : (
                   <>
@@ -135,7 +135,7 @@ const Profile: React.FC = (): JSX.Element => {
                       onClick={handleCancel}
                     >
                       <XMarkIcon style={{ width: '16px', height: '16px' }} className="me-2" />
-                      Cancel
+                      ביטול
                     </button>
                     <button
                       type="button"
@@ -143,7 +143,7 @@ const Profile: React.FC = (): JSX.Element => {
                       onClick={handleSave}
                     >
                       <CheckIcon style={{ width: '16px', height: '16px' }} className="me-2" />
-                      Save Changes
+                      שמור שינויים
                     </button>
                   </>
                 )}

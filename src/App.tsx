@@ -9,8 +9,8 @@ import Register from './pages/User/auth/Register/Register';
 import NoPage from './pages/NoPage/NoPage';
 import Menu from './pages/components/Menu/Menu';
 import Profile from './pages/User/Profile/Profile';
-import GetUserAppointments from './pages/User/ShowAppointment/GetUserAppointments';
-import AddAppointment from './pages/User/Add_Appointments/AddAppoinment';
+import GetUserAppointments from './pages/User/Appointments/ShowAppointment/GetUserAppointments';
+import AddAppointment from './pages/User/Appointments/Add_Appointments/AddAppoinment';
 
 // Protected Routes
 import ProtectedRoutes from './protectedroutes/ProtectedRoutes';

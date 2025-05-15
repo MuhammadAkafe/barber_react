@@ -21,22 +21,26 @@ const initialState: initialState = {
 
 export const GetUserAppointments_ = createAsyncThunk(
     'getallappointmentSlice/GetallAppointments',
-    async (_, thunkAPI) => {
+    async ({userid}:{userid:number},thunkAPI) => {
         try {
-        const userid = 'someUserId'; // Replace with actual user ID logic
-        const offset = 0; // Replace with actual offset logic
-        const response = await apiInstance.get(`/GetUserAppointments${userid}${offset}`);
+            const response = await apiInstance.get(`/GetUserAppointments`,{
+              params: {
+                userid,
+              }
+            });
+            console.log('API Response:', response.data);
             return response.data;
         } 
         catch (error: any) 
         {
+            console.error('API Error:', error.response.data);
             if (axios.isAxiosError(error) && error.response) {
                 return thunkAPI.rejectWithValue(error.response?.data);
             } else 
             {
                 return thunkAPI.rejectWithValue({ message: error.message || 'Unknown error occurred' });
             }
-    }
+        }
     }
 );
 
@@ -61,7 +65,7 @@ export const getallappointmentSlice = createSlice({
             .addCase(GetUserAppointments_.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.appointments=null
-                state.error = action.payload.message;
+                state.error = action.payload?.message || 'Unknown error occurred';
             });
     },
 });
