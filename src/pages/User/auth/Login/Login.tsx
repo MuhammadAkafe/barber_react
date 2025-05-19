@@ -27,7 +27,10 @@ const Login: React.FC = () => {
             if (fetchLoginData.rejected.match(action)) {
                 return;
             }
-            navigate('/Profile');
+            if(fetchLoginData.fulfilled.match(action))  
+            {
+                navigate('/Profile');
+            }
         }
         catch (err) {
             console.error("Unexpected error", err);
@@ -84,7 +87,7 @@ const Login: React.FC = () => {
                                             style={{ color: 'white' }}
                                         />
                                         <div className="text-end mt-1">
-                                            <Link to="/forgotpassword" className="text-decoration-none  text-light">
+                                            <Link to="/phonenumber" className="text-decoration-none  text-light">
                                                 Forgot password?
                                             </Link>
                                         </div>

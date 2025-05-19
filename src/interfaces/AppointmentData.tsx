@@ -21,9 +21,3 @@ export interface GetAppointments {
   phonenumber: string
   rolefor: string
 }
-
-
-export interface Props {
-    formdata: Add_Appointment;
-    handleSelectionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  }

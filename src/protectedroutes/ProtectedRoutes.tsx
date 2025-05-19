@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
-import apiInstance from '../interfaces/axiosInstance';
 import Cookies from 'js-cookie';
-import { useAppSelector } from '../Redux/Store';
 
 interface ProtectedRoutesProps {
   children: JSX.Element;
@@ -12,8 +10,7 @@ interface ProtectedRoutesProps {
 const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const {access_token} = useAppSelector((state) => state.loginSlice);
-  
+  const access_token = Cookies.get('access_token');
 
   // Validate the token locally
   const validateToken = (token: string): boolean => {

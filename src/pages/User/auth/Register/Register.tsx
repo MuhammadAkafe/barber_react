@@ -59,7 +59,7 @@ function Register() {
         phonenumber: '',
         password: '',
         confirm_password: '',
-        isAdmin: false,
+        role:"user"
     });
 
     const dispatch = useAppDispatch();
@@ -77,7 +77,10 @@ function Register() {
             if (fetchRegisterData.rejected.match(action)) {
                 return;
             }
-            navigate(`/`)
+            if(fetchRegisterData.fulfilled.match(action))
+            {
+                navigate(`/`)
+            }
         }
         catch (error) {
             console.error("Register failed", error);
@@ -155,9 +158,9 @@ function Register() {
                                                     <PhoneInput
                                                         defaultCountry="IL"
                                                         value={register.phonenumber}
+                                                        className="form-control bg-dark text-white border-secondary"
                                                         onChange={handlePhoneChange}
                                                         required
-                                                        className="form-control bg-dark text-white border-secondary"
                                                         international
                                                         countryCallingCodeEditable={false}
                                                         placeholder="Enter phone number"
@@ -224,6 +227,11 @@ function Register() {
                                             </div>
                                         </div>
                                     </form>
+                                    <div className="text-center">
+                                        {
+                                            error && <p className="text-danger">{error}</p>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,29 @@
 // features/dataSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import DataState from '../../../interfaces/datastate';
 import apiInstance from '../../../interfaces/axiosInstance';
 import { LoginPayload } from '../../../interfaces/Auth';
+
+
+interface DataState {
+  data: any;
+  loading: boolean;
+  error: string | null;
+}
+interface Data 
+{
+UserID: string; 
+Phonenumber: string; 
+UserName: string; 
+UserRole: string;
+}
+
+interface ActionResponse {
+  message: string;
+  data:Data
+  access_token: string;
+}
+
 
 
 
@@ -11,7 +31,6 @@ import { LoginPayload } from '../../../interfaces/Auth';
 const initialState: DataState = 
 {
     data:null,
-    access_token:null,
     loading: false,
     error: null 
 };
@@ -21,7 +40,7 @@ const initialState: DataState =
 export const fetchLoginData  = createAsyncThunk('login/fetchData', async (login:LoginPayload, { rejectWithValue }) => 
   {
     try {
-        const action = await apiInstance.post(`/Login`,login);
+        const action = await apiInstance.post<ActionResponse>(`/Login`,login);
         return action.data;
     } 
 catch (error: any) 
@@ -54,17 +73,15 @@ const loginSlice = createSlice({
           state.data =null;
           state.error = null;
         })
-        .addCase(fetchLoginData.fulfilled, (state, action: PayloadAction<any>) => {
+        .addCase(fetchLoginData.fulfilled, (state, action: PayloadAction<ActionResponse>) => {
           state.loading = false;
           state.data = action.payload;
-          state.access_token = action.payload.access_token;
           state.error = null;
         })
-        .addCase(fetchLoginData.rejected, (state, action: PayloadAction<any>) => {
+        .addCase(fetchLoginData.rejected, (state, action) => {
           state.loading = false;
           state.data = null;
-          state.access_token = null;
-          state.error = (action.payload?.message || 'An error occurred');
+          state.error = action.payload ? (action.payload as { message: string }).message : 'An error occurred';
         });
     },
 });

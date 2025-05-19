@@ -10,8 +10,8 @@ const Profile: React.FC = (): JSX.Element => {
     phonenumber: '',
     password: '',
   });
+  
   const [isEdited, setEdited] = useState<boolean>(false);
-  const { data } = useAppSelector((state) => state.loginSlice);
 
   const handleEdit = () => {
     setEdited(!isEdited);

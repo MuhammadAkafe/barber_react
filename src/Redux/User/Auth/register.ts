@@ -1,8 +1,10 @@
 // features/dataSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import DataState from '../../../interfaces/datastate';
 import { apiInstance } from '../../../interfaces/axiosInstance';
+
+type Role= "user" | "admin" | "barber";
+
 
 
 interface RegisterPayload {
@@ -11,7 +13,20 @@ interface RegisterPayload {
   password: string;
   phonenumber: string;
   confirm_password: string;
-  isAdmin: boolean;
+  role: Role;
+}
+
+interface DataState 
+{
+  data: any;
+  loading: boolean;
+  error: string | null;
+}
+
+interface ActionPayloadResponse
+{
+  message: string;
+  userid:string;
 }
 
 // Initial state
@@ -45,7 +60,8 @@ export const fetchRegisterData = createAsyncThunk(
 const RegisterSlice = createSlice({
   name: 'Register',
   initialState,
-  reducers: {
+  reducers:
+   {
     resetState: (state) => {
         state.data = null;
         state.error = null;
@@ -59,7 +75,7 @@ const RegisterSlice = createSlice({
         state.data =null;
         state.error = null;
       })
-      .addCase(fetchRegisterData.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(fetchRegisterData.fulfilled, (state, action: PayloadAction<ActionPayloadResponse>) => {
         state.loading = false;
         state.data = action.payload;
         state.error = null;
