@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, useAppSelector } from '../../../../Redux/Store';
 import { useNavigate } from 'react-router-dom';
-import phonenumber, { verify_code, sendVerificationCodeapi } from '../../../../Redux/User/Auth/phonenumber';
+import phonenumber, { verify_code, sendVerificationCodeapi } from '../../../../Redux/User/Auth/sendVerificationCodeapi';
 import Timer from './Timer';
 
 function VerificationCode() {
     const [verificationCode, setVerificationCode] = useState({
         code: '',
-        email: ''
     });
 
     const dispatch = useDispatch<AppDispatch>();
@@ -21,12 +20,16 @@ function VerificationCode() {
     };
 
     const handle_display_time = async () => {
-
-        const action = await dispatch(verify_code({
+        const email = localStorage.getItem('email');
+        if (!email) {
+            console.error('Email not found in localStorage');
+            return;
+        }
+        const action = await dispatch(verify_code(
+            {
             code: verificationCode.code,
-            email: verificationCode.email
+            email: email
         }));    
-
         if(verify_code.fulfilled.match(action)) {
             navigate('/updatepassword');
         }
@@ -34,12 +37,12 @@ function VerificationCode() {
 
     const handleResend = async () => {
 
-        const phonenumber = localStorage.getItem('phonenumber');
-        if (!phonenumber) {
-            console.error('Phone number not found in localStorage');
+        const email = localStorage.getItem('email');
+        if (!email) {
+            console.error('Email not found in localStorage');
             return;
         }
-        const action = await dispatch(sendVerificationCodeapi(phonenumber));
+        const action = await dispatch(sendVerificationCodeapi(email));
         console.log('Resend API Response:', action.payload);
     }
 

@@ -74,9 +74,7 @@ function Register() {
         e.preventDefault();
         try {
             const action = await dispatch(fetchRegisterData(register))
-            if (fetchRegisterData.rejected.match(action)) {
-                return;
-            }
+            
             if(fetchRegisterData.fulfilled.match(action))
             {
                 navigate(`/`)

@@ -5,7 +5,7 @@ import  AddappointmentSlice  from "./User/Appointments/AddAppointment";
 import { useDispatch,useSelector,useStore  } from "react-redux";
 import { useNavigate,NavigateFunction } from 'react-router-dom';
 import GetallappointmentSlice from "./User/Appointments/GetAllappointments";
-import sendVerificationCodeSlice from "./User/Auth/phonenumber";
+import sendVerificationCodeSlice from "./User/Auth/sendVerificationCodeapi";
 import updatepasswordSlice from "./User/Auth/update_passwrd";
 export const store = configureStore({
   reducer: {

@@ -6,12 +6,14 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ handleResend }) => {
-    const [timeLeft, setTimeLeft] = useState<number>(300); // Start with 5 minutes
+    const [timeLeft, setTimeLeft] = useState<number>(0);
     const { data } = useAppSelector((state) => state.sendVerificationCodeSlice);
 
     useEffect(() => {
         if (data?.expiresIn) {
-            setTimeLeft(data.expiresIn);
+            // Calculate remaining time in seconds
+            const remainingTime = Math.floor((data.expiresIn - Date.now()) / 1000);
+            setTimeLeft(remainingTime > 0 ? remainingTime : 0);
         }
     }, [data]);
 

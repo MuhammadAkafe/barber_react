@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { clearError, resetState, sendVerificationCodeapi } from '../../../../Redux/User/Auth/phonenumber';
+import { clearError, resetState, sendVerificationCodeapi } from '../../../../Redux/User/Auth/sendVerificationCodeapi';
 import { AppDispatch, useAppSelector } from '../../../../Redux/Store';
 
 function Email() {
@@ -23,29 +23,17 @@ function Email() {
         e.preventDefault();
         try {
             const action = await dispatch(sendVerificationCodeapi(form.email));
-           
-            if (sendVerificationCodeapi.rejected.match(action)) {
-                return;
-            }
             if (sendVerificationCodeapi.fulfilled.match(action)) 
               {
-                
+                localStorage.setItem('email', form.email);
                 navigate('/verification');
             }
-
-         
         } catch (err) {
             console.error('Error sending verification code:', err);
         }
     };
 
-    const handlePhoneChange = (value: string | undefined) => {
-        setForm(prev => (
-            {
-            ...prev,
-            phonenumber: value || ''
-        }));
-    };
+
 
     return (
         <div className="min-vh-100 d-flex align-items-center justify-content-center bg-dark">

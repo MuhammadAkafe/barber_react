@@ -14,12 +14,8 @@ interface DataState
     error: string | null;
 }
 
-interface ErrorResponse {
-    message: string;
-    status?: number;
-}
-
 interface UpdatePasswordPayload {
+    email: string;
     newPassword: string;
     confirmPassword: string;
 }
@@ -33,23 +29,18 @@ const initialState: DataState =
 
 export const update_password_Api = createAsyncThunk(
     'update_password/updatepassword',
-    async (payload: UpdatePasswordPayload, {getState, rejectWithValue }) => {
+    async (payload: UpdatePasswordPayload, {rejectWithValue }) => {
         try {
             const response = await apiInstance.post('/updatepassword', payload);
             return response.data;
         }
-         catch (error) {
-            if (axios.isAxiosError(error)) 
-                {
-                const axiosError = error as AxiosError<ErrorResponse>;
-                return rejectWithValue({
-                    message: axiosError.response?.data?.message || 'Failed to send verification code',
-                    status: axiosError.response?.status
-                });
-            }
-            return rejectWithValue({
-                message: 'An unexpected error occurred'
-            });
+         catch (error: any) {
+            if (axios.isAxiosError(error) && error.response) {
+                // Backend responded with an error
+                return rejectWithValue(error.response.data);
+              }
+              // Other errors (e.g., network issues)
+              return rejectWithValue({ message: error.message || 'Unknown error occurred' });
         }
     }
 );

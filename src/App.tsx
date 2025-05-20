@@ -18,7 +18,7 @@ import ProtectedRoutes from './protectedroutes/ProtectedRoutes';
 
 import VerificationCode from './pages/User/auth/verification/VerificationCode';
 
-import UpdatePassword from './pages/User/auth/password/UpdatePassword';
+import UpdatePassword from './pages/User/auth/UpdatePassword/UpdatePassword';
 const App = () => {
 
 

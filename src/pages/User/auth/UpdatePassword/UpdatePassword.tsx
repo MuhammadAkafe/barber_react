@@ -4,6 +4,7 @@ import { AppDispatch } from '../../../../Redux/Store';
 import { update_password_Api, resetState } from '../../../../Redux/User/Auth/update_passwrd';
 import { useAppSelector } from '../../../../Redux/Store';
 import { useNavigate } from 'react-router-dom';
+import Email from './../email/Email';
 
 function UpdatePassword() 
 {
@@ -19,28 +20,26 @@ function UpdatePassword()
     useEffect(() => {
         dispatch(resetState());
     }, [dispatch]);
+
+
     const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault();
-        try {
+        const email = localStorage.getItem('email');
+        if (!email) {
+            console.error('Email not found in localStorage');
+            return;
+        }
             const action=await dispatch(update_password_Api(
                 {
+                    email:email,
                     newPassword: passwords.newPassword,
                     confirmPassword: passwords.confirmPassword
                 }
             ));
-            if(update_password_Api.rejected.match(action))
-            {
-                return;
-            }
             if(update_password_Api.fulfilled.match(action))
             {
-                navigate('/login');
+                navigate('/');
             }
-        }
-        catch(err)
-        {
-            console.error("Unexpected error",err);
-        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -23,10 +23,6 @@ const Login: React.FC = () => {
         e.preventDefault();
         try {
             const action = await dispatch(fetchLoginData(loginData));
-
-            if (fetchLoginData.rejected.match(action)) {
-                return;
-            }
             if(fetchLoginData.fulfilled.match(action))  
             {
                 navigate('/Profile');
