@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CalendarIcon, ClockIcon, DocumentTextIcon, ScissorsIcon } from '@heroicons/react/24/outline';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CardPayment from '../../../components/PaymentMethod/CardPayment';
 
 interface AppointmentForm {
   barbers: [];
@@ -8,6 +9,7 @@ interface AppointmentForm {
   date: string;
   time: string;
   notes: string;
+  paymentMethod: string;
 }
 
 function AddAppointment(): JSX.Element {
@@ -17,7 +19,8 @@ function AddAppointment(): JSX.Element {
     service: '',
     date: '',
     time: '',
-    notes: ''
+    notes: '',
+    paymentMethod: ''
   });
 
   const services = [
@@ -49,7 +52,8 @@ function AddAppointment(): JSX.Element {
         service: '',
         date: '',
         time: '',
-        notes: ''
+        notes: '',
+        paymentMethod: ''
       });
     } catch (error) {
       console.error('Error booking appointment:', error);
@@ -57,6 +61,13 @@ function AddAppointment(): JSX.Element {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handlePaymentMethodChange = (method: string) => {
+    setFormData(prev => ({
+      ...prev,
+      paymentMethod: method
+    }));
   };
 
   return (
@@ -186,6 +197,8 @@ function AddAppointment(): JSX.Element {
                     />
                   </div>
                 </div>
+
+                <CardPayment onPaymentMethodChange={handlePaymentMethodChange} />
 
                 <div className="d-grid">
                   <button

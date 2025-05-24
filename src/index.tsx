@@ -16,9 +16,7 @@ root.render(
    <Provider store={store}>
     <BrowserRouter>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Routes>
-        <Route path="/*" element={<App />} />
-      </Routes>
+      <App />
     </LocalizationProvider>
     </BrowserRouter>
    </Provider>

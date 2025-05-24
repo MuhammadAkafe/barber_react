@@ -10,6 +10,10 @@ const Login: React.FC = () => {
         email: "",
         password: "",
     });
+    const [errors, setErrors] = useState({
+        email: "",
+        password: "",
+    });
     const dispatch = useDispatch<AppDispatch>();
 
     const { loading, error } = useAppSelector((state) => state.loginSlice);
@@ -19,18 +23,20 @@ const Login: React.FC = () => {
         dispatch(resetState());
     }, [dispatch]);
 
+
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const action = await dispatch(fetchLoginData(loginData));
-            if(fetchLoginData.fulfilled.match(action))  
-            {
-                navigate('/Profile');
+            try {
+                const action = await dispatch(fetchLoginData(loginData));
+                if(fetchLoginData.fulfilled.match(action))  
+                {
+                    navigate('/Profile');
+                }
             }
-        }
-        catch (err) {
-            console.error("Unexpected error", err);
-        }
+            catch (err) {
+                console.error("Unexpected error", err);
+            }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +44,11 @@ const Login: React.FC = () => {
         setLoginData((prevData) => ({
             ...prevData,
             [name]: value,
+        }));
+        // Clear error when user starts typing
+        setErrors(prev => ({
+            ...prev,
+            [name]: ""
         }));
     };
 
@@ -58,7 +69,7 @@ const Login: React.FC = () => {
                                         <label htmlFor="email" className="form-label text-light">Email address</label>
                                         <input
                                             type="email"
-                                            className="form-control bg-dark text-white border-secondary"
+                                            className={`form-control bg-dark text-white border-secondary ${errors.email ? 'is-invalid' : ''}`}
                                             id="email"
                                             name="email"
                                             value={loginData.email}
@@ -67,13 +78,14 @@ const Login: React.FC = () => {
                                             placeholder="Enter your email"
                                             style={{ color: 'white' }}
                                         />
+                                        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                                     </div>
 
                                     <div className="mb-4">
                                         <label htmlFor="password" className="form-label text-light">Password</label>
                                         <input
                                             type="password"
-                                            className="form-control bg-dark text-white border-secondary"
+                                            className={`form-control bg-dark text-white border-secondary ${errors.password ? 'is-invalid' : ''}`}
                                             id="password"
                                             name="password"
                                             value={loginData.password}
@@ -82,6 +94,7 @@ const Login: React.FC = () => {
                                             placeholder="Enter your password"
                                             style={{ color: 'white' }}
                                         />
+                                        {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                                         <div className="text-end mt-1">
                                             <Link to="/phonenumber" className="text-decoration-none  text-light">
                                                 Forgot password?

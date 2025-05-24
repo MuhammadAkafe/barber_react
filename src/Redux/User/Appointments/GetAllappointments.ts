@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import apiInstance from '../../../interfaces/axiosInstance';
 import { GetAppointments } from '../../../interfaces/AppointmentData';
+import { UUID } from 'crypto';
 
 
 
@@ -21,7 +22,7 @@ const initialState: initialState = {
 
 export const GetUserAppointments_ = createAsyncThunk(
     'getallappointmentSlice/GetallAppointments',
-    async ({userid}:{userid:number},thunkAPI) => {
+    async ({userid}:{userid:UUID},thunkAPI) => {
         try {
             const response = await apiInstance.get(`/GetUserAppointments`,{
               params: {
@@ -55,6 +56,7 @@ export const getallappointmentSlice = createSlice({
         builder
             .addCase(GetUserAppointments_.pending, (state) => {
                 state.loading = true;
+                state.appointments=null
                 state.error = null;
             })
             .addCase(GetUserAppointments_.fulfilled, (state, action: PayloadAction<any>) => {

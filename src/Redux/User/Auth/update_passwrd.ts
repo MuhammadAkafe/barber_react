@@ -31,7 +31,7 @@ export const update_password_Api = createAsyncThunk(
     'update_password/updatepassword',
     async (payload: UpdatePasswordPayload, {rejectWithValue }) => {
         try {
-            const response = await apiInstance.post('/updatepassword', payload);
+            const response = await apiInstance.post('/auth/updatepassword', payload);
             return response.data;
         }
          catch (error: any) {

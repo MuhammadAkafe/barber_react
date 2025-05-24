@@ -10,9 +10,11 @@ import {
   TrashIcon
 } from '@heroicons/react/24/outline'
 
-function Table({handle_Edit, handleDelete, current_appointments}:
-  {handle_Edit: (id: number) => void, handleDelete: (id: number) => void, current_appointments: any[]}):
+function Table({handle_Edit, handleDelete, current_appointments, loading}:
+  {handle_Edit: (id: number) => void, handleDelete: (id: number) => void, current_appointments: any[], loading: boolean}):
   React.JSX.Element {
+
+
   return (
     <>
     <table className="table table-hover table-striped align-middle">
@@ -62,7 +64,15 @@ function Table({handle_Edit, handleDelete, current_appointments}:
       </tr>
     </thead>
     <tbody>
-      {current_appointments?.map((appointment) => (
+      {loading ? (
+        <tr>
+          <td colSpan={7} className="text-center py-5">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </td>
+        </tr>
+      ) : current_appointments?.map((appointment) => (
         <tr key={appointment.id}>
           <td className="text-center">{appointment.appointment_id}</td>
           <td className="text-center">{appointment.barber_id}</td>

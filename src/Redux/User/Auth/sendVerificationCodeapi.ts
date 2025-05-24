@@ -41,7 +41,7 @@ export const sendVerificationCodeapi = createAsyncThunk(
     'phonenumber/sendVerificationCode',
     async (email: string, { rejectWithValue }) => {
         try {
-            const response = await apiInstance.post('/sendVerificationCode', {
+            const response = await apiInstance.post('/auth/sendVerificationCode', {
                email
             });
             return response.data;
@@ -62,7 +62,7 @@ export const verify_code = createAsyncThunk
     'phonenumber/verify_code',
     async (payload: { code: string, email: string}, {  rejectWithValue }) => {
         try {
-            const response = await apiInstance.post('/verifycode', {
+            const response = await apiInstance.post('/auth/verifycode', {
                 code: payload.code,
                 email: payload.email
             });

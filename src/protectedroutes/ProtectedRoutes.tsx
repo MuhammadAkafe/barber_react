@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
-import Cookies from 'js-cookie';
+import { useAppDispatch, useAppSelector } from '../Redux/Store';
+import { setAccessToken } from '../Redux/User/Auth/login';
 
 interface ProtectedRoutesProps {
   children: JSX.Element;
@@ -10,7 +11,8 @@ interface ProtectedRoutesProps {
 const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const access_token = Cookies.get('access_token');
+  const { data } = useAppSelector((state) => state.loginSlice);
+  const access_token = data?.access_token;
 
   // Validate the token locally
   const validateToken = (token: string): boolean => {
@@ -28,26 +30,23 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
 
   // Check authentication and handle token refresh
   const checkAuth = async () => {
-    if (!access_token) 
-      {
+    if (!access_token) {
       setIsAuthenticated(false);
       setLoading(false);
       return;
     }
 
     const isTokenValid = validateToken(access_token);
-    if (!isTokenValid) 
-      {
-        setIsAuthenticated(false);
-    }
-     else {
+    if (!isTokenValid) {
+      setIsAuthenticated(false);
+    } else {
       setIsAuthenticated(true);
     }
     setLoading(false); // End loading
   };
 
-  useEffect(() => 
-    {
+  useEffect(() => {
+    console.log(access_token);
     checkAuth(); // Validate and refresh token on mount
   }, [access_token]); // Rerun if the accessToken changes
 

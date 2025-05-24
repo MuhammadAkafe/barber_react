@@ -40,7 +40,7 @@ const initialState: DataState =
 export const fetchLoginData  = createAsyncThunk('login/fetchData', async (login:LoginPayload, { rejectWithValue }) => 
   {
     try {
-        const action = await apiInstance.post<ActionResponse>(`/Login`,login);
+        const action = await apiInstance.post<ActionResponse>(`/auth/Login`,login);
         return action.data;
     } 
 catch (error: any) 
@@ -65,6 +65,9 @@ const loginSlice = createSlice({
           state.error = null;
           state.loading = false;
         },
+        setAccessToken: (state, action: PayloadAction<ActionResponse>) => {
+          state.data.access_token = action.payload.access_token;
+        },
     },
     extraReducers: (builder) => {
       builder
@@ -86,5 +89,5 @@ const loginSlice = createSlice({
     },
 });
 
-export const { resetState } = loginSlice.actions;
+export const { resetState, setAccessToken } = loginSlice.actions;
 export default loginSlice.reducer;

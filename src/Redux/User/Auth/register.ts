@@ -42,7 +42,7 @@ export const fetchRegisterData = createAsyncThunk(
   'Register/fetchData',
   async (registerPayload: RegisterPayload, { rejectWithValue }) => {
     try {
-      const response = await apiInstance.post(`/Register`, registerPayload);
+      const response = await apiInstance.post(`/auth/Register`, registerPayload);
       return response.data;
     } 
     catch (error: any) {

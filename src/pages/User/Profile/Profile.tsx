@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { useAppSelector } from '../../../Redux/Store';
+import { store, useAppSelector } from '../../../Redux/Store';
 import { CameraIcon, PencilIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const Profile: React.FC = (): JSX.Element => {
@@ -10,6 +10,7 @@ const Profile: React.FC = (): JSX.Element => {
     phonenumber: '',
     password: '',
   });
+  const {username,email,phonenumber,password} = store.getState().loginSlice.data.data;
   
   const [isEdited, setEdited] = useState<boolean>(false);
 
@@ -61,7 +62,7 @@ const Profile: React.FC = (): JSX.Element => {
                     className="form-control"
                     id="username"
                     name="username"
-                    value={profile.username}
+                    value={username}
                     onChange={handleChange}
                     disabled={!isEdited}
                     required
@@ -77,7 +78,7 @@ const Profile: React.FC = (): JSX.Element => {
                     className="form-control"
                     id="email"
                     name="email"
-                    value={profile.email}
+                    value={email}
                     onChange={handleChange}
                     disabled={!isEdited}
                     required
@@ -93,7 +94,7 @@ const Profile: React.FC = (): JSX.Element => {
                     className="form-control"
                     id="phonenumber"
                     name="phonenumber"
-                    value={profile.phonenumber}
+                    value={phonenumber}
                     onChange={handleChange}
                     disabled={!isEdited}
                     required
@@ -109,7 +110,7 @@ const Profile: React.FC = (): JSX.Element => {
                     className="form-control"
                     id="password"
                     name="password"
-                    value={profile.password}
+                    value={password}
                     onChange={handleChange}
                     disabled={!isEdited}
                     required
